@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -9,12 +8,16 @@ import Experience from "@/components/sections/Experience";
 import Education from "@/components/sections/Education";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
+import ParticleNetwork from "@/components/ParticleNetwork";
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground">
+    <div className="min-h-screen w-full flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground cursor-none">
+      <ParticleNetwork />
+      {/* Scanline overlay */}
+      <div className="pointer-events-none fixed inset-0 z-[1] scanlines opacity-[0.025]" />
       <Navbar />
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col relative z-[2]">
         <Hero />
         <About />
         <Skills />

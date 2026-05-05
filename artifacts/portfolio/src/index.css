@@ -166,6 +166,76 @@
   }
 }
 
+/* ===================== GLITCH EFFECT ===================== */
+@keyframes glitch-clip-1 {
+  0%   { clip-path: inset(0 0 96% 0); transform: translate(-3px, 0); }
+  20%  { clip-path: inset(15% 0 70% 0); transform: translate(3px, 0); }
+  40%  { clip-path: inset(50% 0 30% 0); transform: translate(-3px, 0); }
+  60%  { clip-path: inset(75% 0 10% 0); transform: translate(3px, 0); }
+  80%  { clip-path: inset(88% 0 2% 0); transform: translate(-1px, 0); }
+  100% { clip-path: inset(0 0 96% 0); transform: translate(0, 0); }
+}
+
+@keyframes glitch-clip-2 {
+  0%   { clip-path: inset(60% 0 5% 0); transform: translate(3px, 0); color: #f0f; }
+  20%  { clip-path: inset(30% 0 50% 0); transform: translate(-3px, 0); color: #0ff; }
+  40%  { clip-path: inset(5% 0 85% 0); transform: translate(2px, 0); color: #f0f; }
+  60%  { clip-path: inset(80% 0 3% 0); transform: translate(-2px, 0); color: #0ff; }
+  80%  { clip-path: inset(10% 0 75% 0); transform: translate(3px, 0); color: #f0f; }
+  100% { clip-path: inset(60% 0 5% 0); transform: translate(0, 0); color: #f0f; }
+}
+
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text:hover::before,
+.glitch-text:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glitch-text:hover::before {
+  animation: glitch-clip-1 0.4s steps(1) infinite;
+  color: hsl(var(--primary));
+  opacity: 0.8;
+}
+
+.glitch-text:hover::after {
+  animation: glitch-clip-2 0.35s steps(1) infinite;
+  opacity: 0.6;
+}
+
+/* ===================== SCANLINES ===================== */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.8) 2px,
+    rgba(0, 0, 0, 0.8) 4px
+  );
+  background-size: 100% 4px;
+}
+
+/* ===================== NEON GLOW ===================== */
+.neon-glow {
+  text-shadow: 0 0 7px rgba(139, 92, 246, 0.8), 0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+/* ===================== 3D TILT ===================== */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease;
+}
+
+/* ===================== CURSOR NONE ===================== */
+* {
+  cursor: none !important;
+}
+
 @layer utilities {
   input[type="search"]::-webkit-search-cancel-button {
     @apply hidden;

@@ -11,6 +11,7 @@ import CommandPalette from "@/components/CommandPalette";
 import ScrollProgress from "@/components/ScrollProgress";
 import KonamiEasterEgg from "@/components/KonamiEasterEgg";
 import { useKonamiCode } from "@/hooks/useKonamiCode";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const queryClient = new QueryClient();
 
@@ -19,11 +20,6 @@ function AppContent() {
   const [cmdOpen, setCmdOpen] = useState(false);
   const { activated: konamiOn, dismiss: dismissKonami } = useKonamiCode();
 
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
-
-  // Console easter egg
   useEffect(() => {
     console.log(
       "%c👋 Hey developer! You found the console easter egg.",
@@ -43,7 +39,6 @@ function AppContent() {
     );
   }, []);
 
-  // Ctrl+K / Cmd+K command palette
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "k") {
@@ -63,12 +58,11 @@ function AppContent() {
       <CommandPalette open={cmdOpen} onClose={() => setCmdOpen(false)} />
       {konamiOn && <KonamiEasterEgg onClose={dismissKonami} />}
 
-      {/* Command palette hint */}
       {loaded && (
         <div className="fixed bottom-6 right-6 z-50">
           <button
             onClick={() => setCmdOpen(true)}
-            className="flex items-center gap-2 px-3 py-2 bg-card/80 backdrop-blur border border-border/60 rounded-xl text-xs font-mono text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all shadow-lg hover:shadow-primary/10 hover:shadow-xl"
+            className="flex items-center gap-2 px-3 py-2 bg-card/80 backdrop-blur border border-border/60 rounded-xl text-xs font-mono text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all shadow-lg"
             data-testid="cmd-palette-hint"
           >
             <span>Press</span>
@@ -95,5 +89,9 @@ function AppContent() {
 }
 
 export default function App() {
-  return <AppContent />;
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
 }

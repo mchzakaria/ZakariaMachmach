@@ -10,13 +10,13 @@ import { Globe } from "lucide-react";
 const categories = [
   {
     title: "Frontend",
-    color: "from-violet-500/20 to-violet-500/5",
-    accent: "text-violet-400",
-    border: "border-violet-500/30",
-    glow: "rgba(139,92,246,0.15)",
+    accent: "text-violet-600 dark:text-violet-400",
+    border: "border-violet-500/20",
+    glow: "rgba(139,92,246,0.12)",
+    bg: "from-violet-500/5 to-transparent",
     skills: [
       { name: "React", icon: SiReact, color: "#61DAFB", level: 95 },
-      { name: "Next.js", icon: SiNextdotjs, color: "#ffffff", level: 90 },
+      { name: "Next.js", icon: SiNextdotjs, color: "#6366f1", level: 90 },
       { name: "TypeScript", icon: SiTypescript, color: "#3178C6", level: 92 },
       { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", level: 93 },
       { name: "HTML / CSS", icon: Globe, color: "#E34F26", level: 97 },
@@ -24,23 +24,23 @@ const categories = [
   },
   {
     title: "Backend",
-    color: "from-indigo-500/20 to-indigo-500/5",
-    accent: "text-indigo-400",
-    border: "border-indigo-500/30",
-    glow: "rgba(99,102,241,0.15)",
+    accent: "text-indigo-600 dark:text-indigo-400",
+    border: "border-indigo-500/20",
+    glow: "rgba(99,102,241,0.12)",
+    bg: "from-indigo-500/5 to-transparent",
     skills: [
       { name: "Node.js", icon: SiNodedotjs, color: "#339933", level: 90 },
-      { name: "Express", icon: SiExpress, color: "#ffffff", level: 88 },
+      { name: "Express", icon: SiExpress, color: "#888888", level: 88 },
       { name: "NestJS", icon: SiNestjs, color: "#E0234E", level: 82 },
       { name: "GraphQL", icon: SiGraphql, color: "#E10098", level: 78 },
     ],
   },
   {
     title: "Database",
-    color: "from-blue-500/20 to-blue-500/5",
-    accent: "text-blue-400",
-    border: "border-blue-500/30",
-    glow: "rgba(59,130,246,0.15)",
+    accent: "text-blue-600 dark:text-blue-400",
+    border: "border-blue-500/20",
+    glow: "rgba(59,130,246,0.12)",
+    bg: "from-blue-500/5 to-transparent",
     skills: [
       { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1", level: 87 },
       { name: "MongoDB", icon: SiMongodb, color: "#47A248", level: 85 },
@@ -50,15 +50,15 @@ const categories = [
   },
   {
     title: "DevOps & Tools",
-    color: "from-purple-500/20 to-purple-500/5",
-    accent: "text-purple-400",
-    border: "border-purple-500/30",
-    glow: "rgba(168,85,247,0.15)",
+    accent: "text-purple-600 dark:text-purple-400",
+    border: "border-purple-500/20",
+    glow: "rgba(168,85,247,0.12)",
+    bg: "from-purple-500/5 to-transparent",
     skills: [
       { name: "Docker", icon: SiDocker, color: "#2496ED", level: 82 },
       { name: "Git", icon: SiGit, color: "#F05032", level: 94 },
-      { name: "GitHub", icon: SiGithub, color: "#ffffff", level: 93 },
-      { name: "Linux", icon: SiLinux, color: "#FCC624", level: 80 },
+      { name: "GitHub", icon: SiGithub, color: "#6366f1", level: 93 },
+      { name: "Linux", icon: SiLinux, color: "#e2a600", level: 80 },
     ],
   },
 ];
@@ -69,24 +69,21 @@ function ContributionGrid({ level }: { level: number }) {
   const cells = Array.from({ length: weeks * days }, (_, i) => {
     const base = (i / (weeks * days)) * level;
     const rand = Math.random() * 30;
-    const intensity = Math.max(0, Math.min(100, base + rand));
-    return intensity;
+    return Math.max(0, Math.min(100, base + rand));
   });
 
   return (
-    <div className="flex gap-0.5 mt-3">
+    <div className="flex gap-0.5 mt-3 flex-wrap">
       {Array.from({ length: weeks }, (_, w) => (
         <div key={w} className="flex flex-col gap-0.5">
           {Array.from({ length: days }, (_, d) => {
-            const idx = w * days + d;
-            const val = cells[idx];
-            const opacity = val < 10 ? 0.05 : val < 30 ? 0.2 : val < 60 ? 0.5 : val < 80 ? 0.75 : 1;
+            const val = cells[w * days + d];
+            const opacity = val < 10 ? 0.07 : val < 30 ? 0.25 : val < 60 ? 0.5 : val < 80 ? 0.75 : 1;
             return (
               <div
                 key={d}
                 className="w-2.5 h-2.5 rounded-sm bg-primary"
                 style={{ opacity }}
-                title={`${Math.round(val)}%`}
               />
             );
           })}
@@ -101,13 +98,13 @@ export default function Skills() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="skills" className="py-24 px-6 bg-card/30" data-testid="section-skills" ref={ref}>
+    <section id="skills" className="py-16 sm:py-24 px-4 sm:px-6 bg-muted/30" data-testid="section-skills" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-2 mb-16"
+          className="flex flex-col gap-2 mb-12 sm:mb-16"
         >
           <span className="text-primary font-mono text-sm tracking-widest uppercase">02. Skills</span>
           <h2 className="text-3xl md:text-4xl font-bold">Tech Stack</h2>
@@ -116,24 +113,19 @@ export default function Skills() {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
           {categories.map((cat, ci) => (
             <motion.div
               key={cat.title}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: ci * 0.12 }}
-              className={`rounded-2xl border ${cat.border} bg-gradient-to-b ${cat.color} p-6 group hover:shadow-lg transition-all duration-300`}
-              style={{ boxShadow: `0 0 0 1px transparent` }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.boxShadow = `0 0 30px ${cat.glow}`;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.boxShadow = `0 0 0 1px transparent`;
-              }}
+              className={`rounded-2xl border ${cat.border} bg-gradient-to-b ${cat.bg} bg-card p-5 sm:p-6 hover:shadow-lg transition-all duration-300 group`}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 30px ${cat.glow}`; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = ``; }}
               data-testid={`skill-category-${cat.title.toLowerCase().replace(/\s+/g, "-")}`}
             >
-              <h3 className={`font-mono text-sm font-bold uppercase tracking-widest ${cat.accent} mb-4`}>
+              <h3 className={`font-mono text-xs font-bold uppercase tracking-widest ${cat.accent} mb-4`}>
                 {cat.title}
               </h3>
               <div className="space-y-3">
@@ -148,7 +140,7 @@ export default function Skills() {
                       className="flex items-center gap-3 group/skill"
                       data-testid={`skill-${skill.name.toLowerCase().replace(/[\s./]+/g, "-")}`}
                     >
-                      <div className="w-7 h-7 rounded-md bg-background/50 border border-white/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-7 h-7 rounded-md bg-background border border-border/60 flex items-center justify-center flex-shrink-0">
                         <Icon className="w-3.5 h-3.5" style={{ color: skill.color }} />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -156,15 +148,15 @@ export default function Skills() {
                           <span className="text-xs font-mono text-muted-foreground group-hover/skill:text-foreground transition-colors">
                             {skill.name}
                           </span>
-                          <span className="text-xs font-mono text-primary/60">{skill.level}%</span>
+                          <span className="text-xs font-mono text-primary/70">{skill.level}%</span>
                         </div>
-                        <div className="h-1 bg-background/40 rounded-full overflow-hidden">
+                        <div className="h-1 bg-muted rounded-full overflow-hidden">
                           <motion.div
                             className="h-full rounded-full bg-primary"
                             initial={{ width: 0 }}
                             animate={inView ? { width: `${skill.level}%` } : {}}
                             transition={{ duration: 1, delay: ci * 0.1 + si * 0.1 + 0.4, ease: "easeOut" }}
-                            style={{ boxShadow: "0 0 8px rgba(139,92,246,0.5)" }}
+                            style={{ boxShadow: "0 0 8px rgba(139,92,246,0.4)" }}
                           />
                         </div>
                       </div>

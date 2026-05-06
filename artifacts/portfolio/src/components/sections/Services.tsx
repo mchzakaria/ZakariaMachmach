@@ -45,13 +45,13 @@ export default function Services() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="services" className="py-24 px-6" data-testid="section-services" ref={ref}>
+    <section id="services" className="py-16 sm:py-24 px-4 sm:px-6" data-testid="section-services" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-2 mb-16"
+          className="flex flex-col gap-2 mb-12 sm:mb-16"
         >
           <span className="text-primary font-mono text-sm tracking-widest uppercase">03. Services</span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">What I Offer</h2>
@@ -60,7 +60,7 @@ export default function Services() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {services.map((service, i) => {
             const Icon = service.icon;
             return (
@@ -69,7 +69,7 @@ export default function Services() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative bg-card border border-border/60 rounded-2xl p-6 hover:border-primary/40 transition-all duration-300 overflow-hidden"
+                className="group relative bg-card border border-border/60 rounded-2xl p-5 sm:p-6 hover:border-primary/40 transition-all duration-300 overflow-hidden"
                 data-testid={`service-card-${i}`}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -83,7 +83,7 @@ export default function Services() {
                     {service.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2.5 py-1 text-xs font-mono bg-background border border-border/60 text-muted-foreground rounded-md"
+                        className="px-2.5 py-1 text-xs font-mono bg-muted border border-border/60 text-muted-foreground rounded-md"
                         data-testid={`service-tag-${tag.toLowerCase().replace(/\s+/g, "-")}`}
                       >
                         {tag}

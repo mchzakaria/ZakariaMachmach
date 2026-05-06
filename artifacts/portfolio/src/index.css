@@ -68,7 +68,84 @@
 }
 
 :root {
-  /* Defaulting to dark mode palette for everything since it's a dark-themed portfolio */
+  /* LIGHT mode (default) */
+  --button-outline: rgba(0,0,0, .08);
+  --badge-outline: rgba(0,0,0, .05);
+  --opaque-button-border-intensity: -6;
+  --elevate-1: rgba(0,0,0, .03);
+  --elevate-2: rgba(0,0,0, .06);
+
+  --background: 0 0% 98%;
+  --foreground: 240 10% 8%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 8%;
+  --card-border: 240 6% 88%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 8%;
+  --popover-border: 240 6% 88%;
+
+  --primary: 252 83% 57%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 240 6% 93%;
+  --secondary-foreground: 240 10% 8%;
+
+  --muted: 240 6% 93%;
+  --muted-foreground: 240 5% 46%;
+
+  --accent: 252 83% 57%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 240 6% 88%;
+  --input: 240 6% 88%;
+  --ring: 252 83% 57%;
+
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 240 10% 8%;
+  --sidebar-border: 240 6% 88%;
+  --sidebar-primary: 252 83% 57%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 6% 93%;
+  --sidebar-accent-foreground: 240 10% 8%;
+  --sidebar-ring: 252 83% 57%;
+
+  --chart-1: 252 83% 57%;
+  --chart-2: 160 60% 40%;
+  --chart-3: 30 80% 50%;
+  --chart-4: 280 65% 55%;
+  --chart-5: 340 75% 50%;
+
+  --app-font-sans: 'Outfit', sans-serif;
+  --app-font-serif: Georgia, serif;
+  --app-font-mono: 'Space Mono', monospace;
+
+  --radius: 0.5rem;
+
+  --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.06);
+  --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.08);
+  --shadow-sm: 0px 1px 3px 0px rgba(0,0,0,0.08), 0px 1px 2px -1px rgba(0,0,0,0.06);
+  --shadow: 0px 2px 4px 0px rgba(0,0,0,0.08), 0px 1px 2px -1px rgba(0,0,0,0.06);
+  --shadow-md: 0px 4px 8px 0px rgba(0,0,0,0.08), 0px 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0px 8px 16px 0px rgba(0,0,0,0.08), 0px 4px 6px -1px rgba(0,0,0,0.06);
+  --shadow-xl: 0px 16px 32px 0px rgba(0,0,0,0.08), 0px 8px 10px -1px rgba(0,0,0,0.06);
+  --shadow-2xl: 0px 24px 48px 0px rgba(0,0,0,0.12);
+
+  --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+}
+
+.dark {
+  /* DARK mode */
   --button-outline: rgba(255,255,255, .10);
   --badge-outline: rgba(255,255,255, .05);
   --opaque-button-border-intensity: 9;
@@ -120,20 +197,14 @@
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
 
-  --app-font-sans: 'Outfit', sans-serif;
-  --app-font-serif: Georgia, serif;
-  --app-font-mono: 'Space Mono', monospace;
-  
-  --radius: 0.5rem;
-  
-  --shadow-2xs: 0px 2px 0px 0px rgba(0,0,0,0.2);
-  --shadow-xs: 0px 2px 0px 0px rgba(0,0,0,0.2);
-  --shadow-sm: 0px 2px 0px 0px rgba(0,0,0,0.2), 0px 1px 2px -1px rgba(0,0,0,0.2);
-  --shadow: 0px 2px 0px 0px rgba(0,0,0,0.2), 0px 1px 2px -1px rgba(0,0,0,0.2);
-  --shadow-md: 0px 2px 0px 0px rgba(0,0,0,0.2), 0px 2px 4px -1px rgba(0,0,0,0.2);
-  --shadow-lg: 0px 2px 0px 0px rgba(0,0,0,0.2), 0px 4px 6px -1px rgba(0,0,0,0.2);
-  --shadow-xl: 0px 2px 0px 0px rgba(0,0,0,0.2), 0px 8px 10px -1px rgba(0,0,0,0.2);
-  --shadow-2xl: 0px 2px 0px 0px rgba(0,0,0,0.2);
+  --shadow-2xs: 0px 2px 0px 0px rgba(0,0,0,0.4);
+  --shadow-xs: 0px 2px 0px 0px rgba(0,0,0,0.4);
+  --shadow-sm: 0px 2px 0px 0px rgba(0,0,0,0.4), 0px 1px 2px -1px rgba(0,0,0,0.4);
+  --shadow: 0px 2px 0px 0px rgba(0,0,0,0.4), 0px 1px 2px -1px rgba(0,0,0,0.4);
+  --shadow-md: 0px 2px 0px 0px rgba(0,0,0,0.4), 0px 2px 4px -1px rgba(0,0,0,0.4);
+  --shadow-lg: 0px 2px 0px 0px rgba(0,0,0,0.4), 0px 4px 6px -1px rgba(0,0,0,0.4);
+  --shadow-xl: 0px 2px 0px 0px rgba(0,0,0,0.4), 0px 8px 10px -1px rgba(0,0,0,0.4);
+  --shadow-2xl: 0px 2px 0px 0px rgba(0,0,0,0.4);
 
   --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
@@ -144,10 +215,6 @@
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
-.dark {
-  /* Intentionally empty as we put everything in :root to force dark mode */
-}
-
 @layer base {
   * {
     @apply border-border;
@@ -155,10 +222,21 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground;
+    background-attachment: fixed;
+  }
+
+  /* Dark mode background gradient */
+  .dark body {
     background-image: 
       radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
       radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
-    background-attachment: fixed;
+  }
+
+  /* Light mode background — subtle lavender tint */
+  body:not(.dark body) {
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
   }
   
   html {

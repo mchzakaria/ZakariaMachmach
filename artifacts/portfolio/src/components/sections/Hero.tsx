@@ -130,177 +130,166 @@ export default function Hero() {
     >
       <div className="relative z-10 max-w-5xl mx-auto w-full">
 
-        {/* Main hero layout: photo card left, content right */}
-        <div className="flex flex-col lg:flex-row items-start gap-8 mb-8">
+        {/* Profile photo + Terminal side by side on lg, stacked on mobile */}
+        <div className="flex flex-col lg:flex-row items-center gap-8 mb-8">
 
-          {/* Career Profile Card — left column */}
+          {/* Profile photo — circular */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="flex-shrink-0 self-start"
+            className="flex-shrink-0"
           >
-            <div
-              className="relative rounded-2xl overflow-hidden border border-primary/30 bg-card shadow-2xl"
-              style={{
-                width: "180px",
-                boxShadow: "0 0 40px rgba(139,92,246,0.15), 0 20px 40px rgba(0,0,0,0.15)",
-              }}
-            >
-              {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-primary/60 rounded-tl-xl z-10" />
-              <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-primary/60 rounded-tr-xl z-10" />
-              <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-primary/40 rounded-bl-xl z-10" />
-              <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-primary/40 rounded-br-xl z-10" />
-
-              {/* Photo area */}
-              <div className="relative" style={{ height: "216px" }}>
+            <div className="relative group">
+              {/* Animated spinning ring */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-1.5 rounded-full"
+                style={{
+                  background: "conic-gradient(from 0deg, hsl(252 87% 67%), transparent 60%, hsl(252 87% 67%))",
+                  borderRadius: "50%",
+                }}
+              />
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-3 rounded-full opacity-30"
+                style={{
+                  background: "conic-gradient(from 180deg, hsl(280 70% 65%), transparent 60%, hsl(200 80% 60%))",
+                  borderRadius: "50%",
+                }}
+              />
+              {/* Avatar */}
+              <div
+                className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden border-2 border-background bg-card z-10"
+                style={{ boxShadow: "0 0 30px rgba(139,92,246,0.3)" }}
+              >
                 <img
                   src="/avatar.jpg"
                   alt="Zakaria MACHMACH"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                 />
                 {/* Fallback */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-primary/10 via-primary/5 to-transparent">
-                  <div className="w-16 h-16 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center mb-2">
-                    <span className="text-2xl font-extrabold text-primary font-mono">ZM</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-muted-foreground/60">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
+                  <span className="text-4xl font-extrabold text-primary font-mono">ZM</span>
+                  <div className="mt-2 flex items-center gap-1 text-muted-foreground">
                     <Camera className="w-3 h-3" />
                     <span className="text-xs font-mono">add photo</span>
                   </div>
                 </div>
-                {/* Gradient fade to card */}
-                <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-card to-transparent" />
               </div>
-
-              {/* Name plate */}
-              <div className="px-3 pb-4 pt-1 bg-card">
-                <p className="text-xs font-bold text-foreground font-mono leading-tight">Zakaria MACHMACH</p>
-                <p className="text-xs text-primary font-mono mt-0.5">Full Stack Dev</p>
-                <div className="flex items-center gap-1.5 mt-2.5 pt-2.5 border-t border-border/50">
-                  <motion.span
-                    animate={{ opacity: [1, 0.3, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"
-                  />
-                  <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400">Available</span>
-                </div>
+              {/* Online badge */}
+              <div className="absolute bottom-2 right-2 z-20 w-5 h-5 rounded-full bg-emerald-500 border-2 border-background shadow-lg shadow-emerald-500/50">
+                <motion.div
+                  animate={{ scale: [1, 1.6, 1], opacity: [1, 0, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute inset-0 rounded-full bg-emerald-400"
+                />
               </div>
-
-              {/* Scan line animation */}
-              <motion.div
-                animate={{ top: ["0%", "100%"] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/40 to-transparent pointer-events-none z-20"
-              />
             </div>
           </motion.div>
 
-          {/* Right column: Terminal + headings + CTAs */}
-          <div className="flex-1 min-w-0 flex flex-col gap-6">
-            {/* Terminal */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="w-full bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden shadow-2xl"
-            >
-              <div className="flex items-center gap-2 px-4 py-3 bg-muted/50 border-b border-border/60">
-                <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                <div className="flex items-center gap-1.5 ml-2">
-                  <Terminal className="w-3.5 h-3.5 text-muted-foreground" />
-                  <span className="text-xs font-mono text-muted-foreground truncate">portfolio — ~/ — zsh</span>
-                </div>
+          {/* Terminal */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="w-full bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden shadow-2xl"
+          >
+            <div className="flex items-center gap-2 px-4 py-3 bg-muted/50 border-b border-border/60">
+              <div className="w-3 h-3 rounded-full bg-red-500/80" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+              <div className="w-3 h-3 rounded-full bg-green-500/80" />
+              <div className="flex items-center gap-1.5 ml-2">
+                <Terminal className="w-3.5 h-3.5 text-muted-foreground" />
+                <span className="text-xs font-mono text-muted-foreground truncate">portfolio — ~/ — zsh</span>
               </div>
-              <div className="p-4 sm:p-5 font-mono text-sm space-y-3 min-h-[150px]">
-                {TERMINAL_SEQUENCE.map((step, i) => (
-                  (i <= activeStep || completedSteps.includes(i)) && (
-                    <TerminalLine
-                      key={i}
-                      cmd={step.cmd}
-                      output={step.output}
-                      type={step.type}
-                      active={i === activeStep}
-                      onDone={() => handleStepDone(i)}
-                    />
-                  )
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Name + CTAs + Social */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={showMain ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="space-y-4"
-            >
-              <div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight glitch-text leading-tight" data-text="Zakaria MACHMACH">
-                  Zakaria{" "}
-                  <span className="text-primary relative inline-block">
-                    MACHMACH
-                    <motion.span
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary/50"
-                      initial={{ scaleX: 0 }}
-                      animate={showMain ? { scaleX: 1 } : {}}
-                      transition={{ duration: 0.6, delay: 0.3 }}
-                    />
-                  </span>
-                </h1>
-                <p className="text-muted-foreground font-mono text-sm sm:text-base mt-2">
-                  <span className="text-primary">const</span> role ={" "}
-                  <span className="text-yellow-600 dark:text-yellow-400">"Full Stack Web Developer"</span>
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <MagneticButton
-                  onClick={() => handleScroll("#projects")}
-                  className="px-5 py-2.5 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/25 text-sm"
-                  data-testid="hero-btn-projects"
-                >
-                  See My Work
-                </MagneticButton>
-                <MagneticButton
-                  onClick={() => handleScroll("#contact")}
-                  className="px-5 py-2.5 border border-border text-foreground font-semibold rounded-xl hover:bg-foreground/5 transition-all hover:border-primary/50 text-sm"
-                  data-testid="hero-btn-contact"
-                >
-                  Contact Me
-                </MagneticButton>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2.5">
-                {[
-                  { href: "https://github.com/zakariamachmach", icon: Github, testId: "hero-link-github" },
-                  { href: "https://linkedin.com/in/zakariamachmach", icon: Linkedin, testId: "hero-link-linkedin" },
-                  { href: "mailto:zakaria.machmach@gmail.com", icon: Mail, testId: "hero-link-email" },
-                ].map(({ href, icon: Icon, testId }) => (
-                  <MagneticButton
-                    key={testId}
-                    as="a"
-                    href={href}
-                    target={href.startsWith("mailto") ? undefined : "_blank"}
-                    rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                    className="w-9 h-9 rounded-lg border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all hover:bg-primary/10"
-                    data-testid={testId}
-                    strength={0.5}
-                    radius={60}
-                  >
-                    <Icon className="w-4 h-4" />
-                  </MagneticButton>
-                ))}
-                <MoroccoTime />
-              </div>
-            </motion.div>
-          </div>
+            </div>
+            <div className="p-4 sm:p-5 font-mono text-sm space-y-3 min-h-[160px]">
+              {TERMINAL_SEQUENCE.map((step, i) => (
+                (i <= activeStep || completedSteps.includes(i)) && (
+                  <TerminalLine
+                    key={i}
+                    cmd={step.cmd}
+                    output={step.output}
+                    type={step.type}
+                    active={i === activeStep}
+                    onDone={() => handleStepDone(i)}
+                  />
+                )
+              ))}
+            </div>
+          </motion.div>
         </div>
 
+        {/* Main content */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={showMain ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          className="text-center space-y-6"
+        >
+          <div>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight glitch-text leading-tight" data-text="Zakaria MACHMACH">
+              Zakaria{" "}
+              <span className="text-primary relative inline-block">
+                MACHMACH
+                <motion.span
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary/50"
+                  initial={{ scaleX: 0 }}
+                  animate={showMain ? { scaleX: 1 } : {}}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                />
+              </span>
+            </h1>
+            <p className="text-muted-foreground font-mono text-base sm:text-lg mt-3">
+              <span className="text-primary">const</span> role ={" "}
+              <span className="text-yellow-600 dark:text-yellow-400">"Full Stack Web Developer"</span>
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <MagneticButton
+              onClick={() => handleScroll("#projects")}
+              className="px-6 sm:px-7 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/25"
+              data-testid="hero-btn-projects"
+            >
+              See My Work
+            </MagneticButton>
+            <MagneticButton
+              onClick={() => handleScroll("#contact")}
+              className="px-6 sm:px-7 py-3 border border-border text-foreground font-semibold rounded-xl hover:bg-foreground/5 transition-all hover:border-primary/50"
+              data-testid="hero-btn-contact"
+            >
+              Contact Me
+            </MagneticButton>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {[
+              { href: "https://github.com/zakariamachmach", icon: Github, testId: "hero-link-github" },
+              { href: "https://linkedin.com/in/zakariamachmach", icon: Linkedin, testId: "hero-link-linkedin" },
+              { href: "mailto:zakaria.machmach@gmail.com", icon: Mail, testId: "hero-link-email" },
+            ].map(({ href, icon: Icon, testId }) => (
+              <MagneticButton
+                key={testId}
+                as="a"
+                href={href}
+                target={href.startsWith("mailto") ? undefined : "_blank"}
+                rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                className="w-10 h-10 rounded-lg border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all hover:bg-primary/10"
+                data-testid={testId}
+                strength={0.5}
+                radius={60}
+              >
+                <Icon className="w-4 h-4" />
+              </MagneticButton>
+            ))}
+            <MoroccoTime />
+          </div>
+        </motion.div>
       </div>
 
       <motion.button

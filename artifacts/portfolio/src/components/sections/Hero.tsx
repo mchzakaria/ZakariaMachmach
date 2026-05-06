@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Terminal, Camera } from "lucide-react";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 const TERMINAL_SEQUENCE = [
   { cmd: "whoami", output: "zakaria.machmach", type: "result" as const },
@@ -70,6 +71,39 @@ function TerminalLine({ cmd, output, type, active, onDone }: {
   );
 }
 
+function MoroccoTime() {
+  const [time, setTime] = useState(() =>
+    new Date().toLocaleTimeString("en-GB", {
+      timeZone: "Africa/Casablanca",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    })
+  );
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTime(new Date().toLocaleTimeString("en-GB", {
+        timeZone: "Africa/Casablanca",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }));
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div
+      className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-border/60 bg-card/60 backdrop-blur-sm text-xs font-mono text-muted-foreground"
+      data-testid="morocco-time"
+    >
+      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+      <span>🇲🇦 Casablanca · {time} WET</span>
+    </div>
+  );
+}
+
 export default function Hero() {
   const [activeStep, setActiveStep] = useState(0);
   const [showMain, setShowMain] = useState(false);
@@ -95,7 +129,8 @@ export default function Hero() {
       data-testid="section-hero"
     >
       <div className="relative z-10 max-w-5xl mx-auto w-full">
-        {/* Profile photo + Terminal side by side on lg, stacked on mobile */}
+
+        {/* Profile photo + Terminal */}
         <div className="flex flex-col lg:flex-row items-center gap-8 mb-8">
 
           {/* Profile photo */}
@@ -106,7 +141,6 @@ export default function Hero() {
             className="flex-shrink-0"
           >
             <div className="relative group">
-              {/* Animated ring */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -125,19 +159,16 @@ export default function Hero() {
                   borderRadius: "50%",
                 }}
               />
-              {/* Avatar */}
               <div
                 className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden border-2 border-background bg-card z-10"
                 style={{ boxShadow: "0 0 30px rgba(139,92,246,0.3)" }}
               >
-                {/* Replace src with your actual photo path e.g. src="/avatar.jpg" */}
                 <img
                   src="/avatar.jpg"
                   alt="Zakaria MACHMACH"
                   className="w-full h-full object-cover"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                 />
-                {/* Fallback placeholder */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
                   <span className="text-4xl font-extrabold text-primary font-mono">ZM</span>
                   <div className="mt-2 flex items-center gap-1 text-muted-foreground">
@@ -146,7 +177,6 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-              {/* Online badge */}
               <div className="absolute bottom-2 right-2 z-20 w-5 h-5 rounded-full bg-emerald-500 border-2 border-background shadow-lg shadow-emerald-500/50">
                 <motion.div
                   animate={{ scale: [1, 1.6, 1], opacity: [1, 0, 1] }}
@@ -162,7 +192,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-full bg-card/80 dark:bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden shadow-2xl"
+            className="w-full bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden shadow-2xl"
           >
             <div className="flex items-center gap-2 px-4 py-3 bg-muted/50 border-b border-border/60">
               <div className="w-3 h-3 rounded-full bg-red-500/80" />
@@ -216,40 +246,46 @@ export default function Hero() {
             </p>
           </div>
 
+          {/* CTA buttons — magnetic */}
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            <button
+            <MagneticButton
               onClick={() => handleScroll("#projects")}
-              className="px-6 sm:px-7 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all hover:scale-105 shadow-lg shadow-primary/25"
+              className="px-6 sm:px-7 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/25"
               data-testid="hero-btn-projects"
             >
               See My Work
-            </button>
-            <button
+            </MagneticButton>
+            <MagneticButton
               onClick={() => handleScroll("#contact")}
               className="px-6 sm:px-7 py-3 border border-border text-foreground font-semibold rounded-xl hover:bg-foreground/5 transition-all hover:border-primary/50"
               data-testid="hero-btn-contact"
             >
               Contact Me
-            </button>
+            </MagneticButton>
           </div>
 
-          <div className="flex items-center justify-center gap-3">
+          {/* Social links + Morocco time */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
             {[
               { href: "https://github.com/zakariamachmach", icon: Github, testId: "hero-link-github" },
               { href: "https://linkedin.com/in/zakariamachmach", icon: Linkedin, testId: "hero-link-linkedin" },
               { href: "mailto:zakaria.machmach@gmail.com", icon: Mail, testId: "hero-link-email" },
             ].map(({ href, icon: Icon, testId }) => (
-              <a
+              <MagneticButton
                 key={testId}
+                as="a"
                 href={href}
                 target={href.startsWith("mailto") ? undefined : "_blank"}
                 rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
                 className="w-10 h-10 rounded-lg border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all hover:bg-primary/10"
                 data-testid={testId}
+                strength={0.5}
+                radius={60}
               >
                 <Icon className="w-4 h-4" />
-              </a>
+              </MagneticButton>
             ))}
+            <MoroccoTime />
           </div>
         </motion.div>
       </div>

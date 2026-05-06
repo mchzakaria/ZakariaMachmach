@@ -104,11 +104,20 @@ export default function Skills() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-2 mb-12 sm:mb-16"
+          className="relative flex flex-col gap-2 mb-12 sm:mb-16"
         >
-          <span className="text-primary font-mono text-sm tracking-widest uppercase">02. Skills</span>
-          <h2 className="text-3xl md:text-4xl font-bold">Tech Stack</h2>
-          <p className="text-muted-foreground max-w-xl mt-2">
+          <motion.span
+            initial={{ opacity: 0, scale: 1.4, filter: "blur(8px)" }}
+            animate={inView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8 }}
+            className="absolute -top-10 -left-2 sm:-left-4 text-[7rem] sm:text-[9rem] font-extrabold font-mono leading-none select-none pointer-events-none text-foreground/[0.04]"
+            aria-hidden="true"
+          >
+            02
+          </motion.span>
+          <span className="relative z-10 text-primary font-mono text-sm tracking-widest uppercase">02. Skills</span>
+          <h2 className="relative z-10 text-3xl md:text-4xl font-bold">Tech Stack</h2>
+          <p className="relative z-10 text-muted-foreground max-w-xl mt-2">
             Technologies I work with — visualized as contribution intensity.
           </p>
         </motion.div>

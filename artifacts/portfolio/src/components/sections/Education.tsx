@@ -25,19 +25,28 @@ export default function Education() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="education" className="py-24 px-6 bg-card/30" data-testid="section-education" ref={ref}>
+    <section id="education" className="py-16 sm:py-24 px-4 sm:px-6 bg-card/30" data-testid="section-education" ref={ref}>
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-2 mb-16"
+          className="relative flex flex-col gap-2 mb-12 sm:mb-16"
         >
-          <span className="text-primary font-mono text-sm tracking-widest uppercase">06. Education</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">Academic Background</h2>
+          <motion.span
+            initial={{ opacity: 0, scale: 1.4, filter: "blur(8px)" }}
+            animate={inView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8 }}
+            className="absolute -top-10 -left-2 sm:-left-4 text-[7rem] sm:text-[9rem] font-extrabold font-mono leading-none select-none pointer-events-none text-foreground/[0.04]"
+            aria-hidden="true"
+          >
+            06
+          </motion.span>
+          <span className="relative z-10 text-primary font-mono text-sm tracking-widest uppercase">06. Education</span>
+          <h2 className="relative z-10 text-3xl md:text-4xl font-bold text-foreground">Academic Background</h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
           <div className="space-y-6">
             {education.map((edu, i) => (
               <motion.div
@@ -45,7 +54,7 @@ export default function Education() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-card border border-border/60 rounded-2xl p-6 hover:border-primary/30 transition-colors"
+                className="bg-card border border-border/60 rounded-2xl p-5 sm:p-6 hover:border-primary/30 transition-colors"
                 data-testid={`education-${i}`}
               >
                 <div className="flex items-start gap-4 mb-4">
@@ -87,7 +96,7 @@ export default function Education() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            <div className="bg-card border border-border/60 rounded-2xl p-6 hover:border-primary/30 transition-colors">
+            <div className="bg-card border border-border/60 rounded-2xl p-5 sm:p-6 hover:border-primary/30 transition-colors">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <BookOpen className="w-5 h-5 text-primary" />

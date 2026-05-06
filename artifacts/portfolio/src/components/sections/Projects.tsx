@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Github, ExternalLink, Layers } from "lucide-react";
+import TiltCard from "@/components/ui/TiltCard";
 
 const projects = [
   {
@@ -60,65 +61,77 @@ export default function Projects() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-2 mb-12 sm:mb-16"
+          className="relative flex flex-col gap-2 mb-12 sm:mb-16"
         >
-          <span className="text-primary font-mono text-sm tracking-widest uppercase">04. Projects</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">Selected Work</h2>
-          <p className="text-muted-foreground max-w-xl mt-2">
+          <motion.span
+            initial={{ opacity: 0, scale: 1.4, filter: "blur(8px)" }}
+            animate={inView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8 }}
+            className="absolute -top-10 -left-2 sm:-left-4 text-[7rem] sm:text-[9rem] font-extrabold font-mono leading-none select-none pointer-events-none text-foreground/[0.04]"
+            aria-hidden="true"
+          >
+            04
+          </motion.span>
+          <span className="relative z-10 text-primary font-mono text-sm tracking-widest uppercase">04. Projects</span>
+          <h2 className="relative z-10 text-3xl md:text-4xl font-bold text-foreground">Selected Work</h2>
+          <p className="relative z-10 text-muted-foreground max-w-xl mt-2">
             A selection of projects that reflect my range — from real-time apps to e-commerce and beyond.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
+        <div className="grid sm:grid-cols-2 gap-5 sm:gap-6" style={{ perspective: "1200px" }}>
           {projects.map((project, i) => (
             <motion.div
               key={project.name}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.12 }}
-              className={`group relative rounded-2xl border border-border/60 bg-gradient-to-br ${project.gradient} p-5 sm:p-6 ${project.border} transition-all duration-300 flex flex-col`}
-              data-testid={`project-card-${project.name.toLowerCase()}`}
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="w-10 h-10 rounded-lg bg-background/70 border border-border/60 flex items-center justify-center">
-                  <Layers className={`w-4 h-4 ${project.accent}`} />
+              <TiltCard
+                className={`group relative rounded-2xl border border-border/60 bg-gradient-to-br ${project.gradient} p-5 sm:p-6 ${project.border} transition-all duration-300 flex flex-col h-full`}
+                data-testid={`project-card-${project.name.toLowerCase()}`}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-background/70 border border-border/60 flex items-center justify-center">
+                    <Layers className={`w-4 h-4 ${project.accent}`} />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      data-testid={`project-github-${project.name.toLowerCase()}`}
+                    >
+                      <Github className="w-4 h-4" />
+                    </a>
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      data-testid={`project-demo-${project.name.toLowerCase()}`}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                    data-testid={`project-github-${project.name.toLowerCase()}`}
-                  >
-                    <Github className="w-4 h-4" />
-                  </a>
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                    data-testid={`project-demo-${project.name.toLowerCase()}`}
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
+
+                <h3 className="text-xl font-bold text-foreground mb-2">{project.name}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">{project.description}</p>
+
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="px-2.5 py-1 text-xs font-mono bg-background/70 border border-border/60 text-muted-foreground rounded-md hover:text-foreground transition-colors"
+                      data-testid={`project-tech-${t.toLowerCase().replace(/\s+/g, "-")}`}
+                    >
+                      {t}
+                    </span>
+                  ))}
                 </div>
-              </div>
-
-              <h3 className="text-xl font-bold text-foreground mb-2">{project.name}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">{project.description}</p>
-
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="px-2.5 py-1 text-xs font-mono bg-background/70 border border-border/60 text-muted-foreground rounded-md hover:text-foreground transition-colors"
-                    data-testid={`project-tech-${t.toLowerCase().replace(/\s+/g, "-")}`}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
+              </TiltCard>
             </motion.div>
           ))}
         </div>

@@ -42,10 +42,20 @@ export default function About() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-2 mb-10 sm:mb-12"
+          className="relative flex flex-col gap-2 mb-10 sm:mb-12"
         >
-          <span className="text-primary font-mono text-sm tracking-widest uppercase">01. About</span>
-          <h2 className="text-3xl md:text-4xl font-bold">Who I Am</h2>
+          {/* Big decorative number */}
+          <motion.span
+            initial={{ opacity: 0, scale: 1.4, filter: "blur(8px)" }}
+            animate={inView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8 }}
+            className="absolute -top-10 -left-2 sm:-left-4 text-[7rem] sm:text-[9rem] font-extrabold font-mono leading-none select-none pointer-events-none text-foreground/[0.04]"
+            aria-hidden="true"
+          >
+            01
+          </motion.span>
+          <span className="relative z-10 text-primary font-mono text-sm tracking-widest uppercase">01. About</span>
+          <h2 className="relative z-10 text-3xl md:text-4xl font-bold">Who I Am</h2>
         </motion.div>
 
         <motion.div
@@ -54,7 +64,6 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="bg-card border border-border/60 rounded-2xl overflow-hidden shadow-lg"
         >
-          {/* VS Code title bar */}
           <div className="flex items-center gap-2 px-3 sm:px-4 py-2.5 bg-muted/50 border-b border-border/60">
             <div className="w-3 h-3 rounded-full bg-red-500/80" />
             <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -65,7 +74,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* VS Code tabs */}
           <div className="flex border-b border-border/40 bg-muted/20 overflow-x-auto">
             <div className="px-3 sm:px-4 py-2 text-xs font-mono text-foreground border-r border-border/40 border-b-2 border-b-primary bg-card/50 flex items-center gap-1.5 flex-shrink-0">
               <FileCode className="w-3 h-3 text-blue-500" />
@@ -78,7 +86,6 @@ export default function About() {
           </div>
 
           <div className="flex min-h-0">
-            {/* File tree sidebar — hidden on mobile */}
             <div className="hidden md:block w-44 bg-muted/20 border-r border-border/40 p-3 shrink-0">
               <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-3 px-1">Explorer</p>
               {fileTree.map((f, i) => {
@@ -103,16 +110,13 @@ export default function About() {
               })}
             </div>
 
-            {/* Code area */}
             <div className="flex-1 overflow-x-auto">
               <div className="flex font-mono text-xs sm:text-sm py-4">
-                {/* Line numbers */}
                 <div className="select-none pr-3 pl-3 sm:pl-4 text-right text-muted-foreground/40 shrink-0">
                   {codeLines.map((_, i) => (
                     <div key={i} className="leading-6">{i + 1}</div>
                   ))}
                 </div>
-                {/* Code */}
                 <div className="flex-1 pr-3 sm:pr-4">
                   {codeLines.map((line, i) => (
                     <motion.div
@@ -120,7 +124,7 @@ export default function About() {
                       initial={{ opacity: 0 }}
                       animate={inView ? { opacity: 1 } : {}}
                       transition={{ delay: 0.3 + i * 0.04 }}
-                      className="leading-6 whitespace-nowrap hover:bg-foreground/3 transition-colors"
+                      className="leading-6 whitespace-nowrap hover:bg-foreground/[0.03] transition-colors"
                     >
                       {line.tokens.map((tok, j) => (
                         <span key={j} className={tok.c}>{tok.t}</span>
@@ -132,7 +136,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* Status bar */}
           <div className="flex items-center justify-between px-3 sm:px-4 py-1.5 bg-primary/10 border-t border-border/40 text-xs font-mono text-primary/80 overflow-x-auto gap-4">
             <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
               <span>TypeScript</span>

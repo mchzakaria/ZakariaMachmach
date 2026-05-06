@@ -1,5 +1,6 @@
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
+import TechMarquee from "@/components/TechMarquee";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
 import Services from "@/components/sections/Services";
@@ -14,11 +15,11 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground cursor-none">
       <ParticleNetwork />
-      {/* Scanline overlay */}
       <div className="pointer-events-none fixed inset-0 z-[1] scanlines opacity-[0.025]" />
       <Navbar />
       <main className="flex-1 flex flex-col relative z-[2]">
         <Hero />
+        <TechMarquee />
         <About />
         <Skills />
         <Services />

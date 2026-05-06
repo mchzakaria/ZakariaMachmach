@@ -6,3 +6,9 @@ id = "7l5uqMWg-Ifp9QAdwUiH4"
 uri = "file://zakaria-portfolio.tar.gz"
 type = "unspecified"
 title = "zakaria-portfolio — Source Code"
+
+[[outputs]]
+id = "ZwAX7N4nfU4y_uO70S_We"
+uri = "file://zakaria-portfolio-standalone.tar.gz"
+type = "unspecified"
+title = "zakaria-portfolio — Standalone (npm ready)"

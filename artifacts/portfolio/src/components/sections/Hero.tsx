@@ -6,8 +6,8 @@ import MagneticButton from "@/components/ui/MagneticButton";
 const TERMINAL_SEQUENCE = [
   { cmd: "whoami", output: "zakaria.machmach", type: "result" as const },
   { cmd: "cat role.txt", output: "Full Stack Web Developer", type: "result" as const },
-  { cmd: "ls skills/", output: "React/  Node.js/  TypeScript/  PostgreSQL/  Docker/  ...", type: "result" as const },
-  { cmd: "cat status.json", output: '{ "available": true, "looking_for": "next_challenge" }', type: "result" as const },
+  { cmd: "ls skills/", output: "React/  Node.js/  TypeScript/  PostgreSQL/  Go/  ...", type: "result" as const },
+  { cmd: "cat status.json", output: '{ "available": true, "location": "Casablanca, Morocco" }', type: "result" as const },
   { cmd: "./run portfolio.sh", output: null, type: "action" as const },
 ];
 
@@ -141,7 +141,6 @@ export default function Hero() {
             className="flex-shrink-0"
           >
             <div className="relative group">
-              {/* Animated spinning ring */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -160,7 +159,6 @@ export default function Hero() {
                   borderRadius: "50%",
                 }}
               />
-              {/* Avatar */}
               <div
                 className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden border-2 border-background bg-card z-10"
                 style={{ boxShadow: "0 0 30px rgba(139,92,246,0.3)" }}
@@ -171,7 +169,6 @@ export default function Hero() {
                   className="w-full h-full object-cover"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                 />
-                {/* Fallback */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
                   <span className="text-4xl font-extrabold text-primary font-mono">ZM</span>
                   <div className="mt-2 flex items-center gap-1 text-muted-foreground">
@@ -180,7 +177,6 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-              {/* Online badge */}
               <div className="absolute bottom-2 right-2 z-20 w-5 h-5 rounded-full bg-emerald-500 border-2 border-background shadow-lg shadow-emerald-500/50">
                 <motion.div
                   animate={{ scale: [1, 1.6, 1], opacity: [1, 0, 1] }}
@@ -269,9 +265,9 @@ export default function Hero() {
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             {[
-              { href: "https://github.com/zakariamachmach", icon: Github, testId: "hero-link-github" },
+              { href: "https://github.com/mchzakaria", icon: Github, testId: "hero-link-github" },
               { href: "https://linkedin.com/in/zakariamachmach", icon: Linkedin, testId: "hero-link-linkedin" },
-              { href: "mailto:zakaria.machmach@gmail.com", icon: Mail, testId: "hero-link-email" },
+              { href: "mailto:zakariamachmach03@gmail.com", icon: Mail, testId: "hero-link-email" },
             ].map(({ href, icon: Icon, testId }) => (
               <MagneticButton
                 key={testId}

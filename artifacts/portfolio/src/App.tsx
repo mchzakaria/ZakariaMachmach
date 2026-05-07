@@ -30,7 +30,7 @@ function AppContent() {
       "color: #a78bfa; font-size: 14px;"
     );
     console.log(
-      "%c📧 zakaria.machmach@gmail.com | 🐙 github.com/zakariamachmach",
+      "%c📧 zakariamachmach03@gmail.com | 🐙 github.com/mchzakaria",
       "color: #6d28d9; font-size: 12px;"
     );
     console.log(

@@ -1,11 +1,12 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
-  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs,
-  SiExpress, SiNestjs, SiGraphql, SiPostgresql, SiMongodb,
-  SiMysql, SiRedis, SiDocker, SiGit, SiGithub, SiLinux,
+  SiReact, SiTypescript, SiTailwindcss, SiJavascript,
+  SiNodedotjs, SiExpress, SiPhp, SiSpring, SiSymfony,
+  SiPostgresql, SiMongodb, SiMysql, SiRedis, SiSupabase,
+  SiGit, SiDocker, SiDart, SiFlutter, SiGo,
 } from "react-icons/si";
-import { Globe } from "lucide-react";
+import { Globe, Code2 } from "lucide-react";
 
 const categories = [
   {
@@ -15,11 +16,11 @@ const categories = [
     glow: "rgba(139,92,246,0.12)",
     bg: "from-violet-500/5 to-transparent",
     skills: [
-      { name: "React", icon: SiReact, color: "#61DAFB", level: 95 },
-      { name: "Next.js", icon: SiNextdotjs, color: "#6366f1", level: 90 },
-      { name: "TypeScript", icon: SiTypescript, color: "#3178C6", level: 92 },
-      { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", level: 93 },
-      { name: "HTML / CSS", icon: Globe, color: "#E34F26", level: 97 },
+      { name: "React", icon: SiReact, color: "#61DAFB", level: 92 },
+      { name: "TypeScript", icon: SiTypescript, color: "#3178C6", level: 88 },
+      { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", level: 90 },
+      { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E", level: 90 },
+      { name: "HTML / CSS", icon: Globe, color: "#E34F26", level: 95 },
     ],
   },
   {
@@ -29,36 +30,39 @@ const categories = [
     glow: "rgba(99,102,241,0.12)",
     bg: "from-indigo-500/5 to-transparent",
     skills: [
-      { name: "Node.js", icon: SiNodedotjs, color: "#339933", level: 90 },
-      { name: "Express", icon: SiExpress, color: "#888888", level: 88 },
-      { name: "NestJS", icon: SiNestjs, color: "#E0234E", level: 82 },
-      { name: "GraphQL", icon: SiGraphql, color: "#E10098", level: 78 },
+      { name: "Node.js", icon: SiNodedotjs, color: "#339933", level: 88 },
+      { name: "Express", icon: SiExpress, color: "#888888", level: 87 },
+      { name: "PHP", icon: SiPhp, color: "#777BB4", level: 80 },
+      { name: "Spring Boot", icon: SiSpring, color: "#6DB33F", level: 72 },
+      { name: "Symfony", icon: SiSymfony, color: "#888888", level: 70 },
     ],
   },
   {
-    title: "Database",
+    title: "Databases & Cache",
     accent: "text-blue-600 dark:text-blue-400",
     border: "border-blue-500/20",
     glow: "rgba(59,130,246,0.12)",
     bg: "from-blue-500/5 to-transparent",
     skills: [
-      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1", level: 87 },
+      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1", level: 85 },
       { name: "MongoDB", icon: SiMongodb, color: "#47A248", level: 85 },
       { name: "MySQL", icon: SiMysql, color: "#4479A1", level: 83 },
       { name: "Redis", icon: SiRedis, color: "#DC382D", level: 75 },
+      { name: "Supabase", icon: SiSupabase, color: "#3ECF8E", level: 72 },
     ],
   },
   {
-    title: "DevOps & Tools",
+    title: "Languages & Tools",
     accent: "text-purple-600 dark:text-purple-400",
     border: "border-purple-500/20",
     glow: "rgba(168,85,247,0.12)",
     bg: "from-purple-500/5 to-transparent",
     skills: [
-      { name: "Docker", icon: SiDocker, color: "#2496ED", level: 82 },
-      { name: "Git", icon: SiGit, color: "#F05032", level: 94 },
-      { name: "GitHub", icon: SiGithub, color: "#6366f1", level: 93 },
-      { name: "Linux", icon: SiLinux, color: "#e2a600", level: 80 },
+      { name: "Go", icon: SiGo, color: "#00ADD8", level: 75 },
+      { name: "Dart / Flutter", icon: SiFlutter, color: "#02569B", level: 78 },
+      { name: "Java", icon: Code2, color: "#f89820", level: 72 },
+      { name: "Git", icon: SiGit, color: "#F05032", level: 92 },
+      { name: "Docker", icon: SiDocker, color: "#2496ED", level: 78 },
     ],
   },
 ];

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Mail, Linkedin, Github, Send, CheckCircle } from "lucide-react";
+import { Mail, Linkedin, Github, Send, CheckCircle, Phone } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
 
 export default function Contact() {
@@ -56,16 +56,17 @@ export default function Contact() {
 
             <div className="space-y-4">
               {[
-                { href: "mailto:zakaria.machmach@gmail.com", icon: Mail, label: "Email", value: "zakaria.machmach@gmail.com", testId: "contact-email-link" },
+                { href: "mailto:zakariamachmach03@gmail.com", icon: Mail, label: "Email", value: "zakariamachmach03@gmail.com", testId: "contact-email-link" },
+                { href: "tel:+212682685984", icon: Phone, label: "Phone", value: "+212 682 685 984", testId: "contact-phone-link" },
                 { href: "https://linkedin.com/in/zakariamachmach", icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/zakariamachmach", testId: "contact-linkedin-link" },
-                { href: "https://github.com/zakariamachmach", icon: Github, label: "GitHub", value: "github.com/zakariamachmach", testId: "contact-github-link" },
+                { href: "https://github.com/mchzakaria", icon: Github, label: "GitHub", value: "github.com/mchzakaria", testId: "contact-github-link" },
               ].map(({ href, icon: Icon, label, value, testId }) => (
                 <MagneticButton
                   key={testId}
                   as="a"
                   href={href}
-                  target={href.startsWith("mailto") ? undefined : "_blank"}
-                  rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                  target={href.startsWith("mailto") || href.startsWith("tel") ? undefined : "_blank"}
+                  rel={href.startsWith("mailto") || href.startsWith("tel") ? undefined : "noopener noreferrer"}
                   className="flex items-center gap-4 group"
                   data-testid={testId}
                   strength={0.2}

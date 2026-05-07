@@ -14,9 +14,9 @@ const fileTree = [
 const codeLines = [
   { tokens: [{ t: "const", c: "text-violet-500 dark:text-violet-400" }, { t: " developer", c: "text-blue-600 dark:text-blue-300" }, { t: " = {", c: "text-foreground" }] },
   { tokens: [{ t: "  name", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": ", c: "text-foreground" }, { t: '"Zakaria MACHMACH"', c: "text-amber-600 dark:text-yellow-300" }, { t: ",", c: "text-foreground" }] },
-  { tokens: [{ t: "  role", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": ", c: "text-foreground" }, { t: '"Full Stack Developer"', c: "text-amber-600 dark:text-yellow-300" }, { t: ",", c: "text-foreground" }] },
+  { tokens: [{ t: "  role", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": ", c: "text-foreground" }, { t: '"Full Stack Web Developer"', c: "text-amber-600 dark:text-yellow-300" }, { t: ",", c: "text-foreground" }] },
   { tokens: [{ t: "  location", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": ", c: "text-foreground" }, { t: '"Casablanca, Morocco"', c: "text-amber-600 dark:text-yellow-300" }, { t: ",", c: "text-foreground" }] },
-  { tokens: [{ t: "  experience", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": ", c: "text-foreground" }, { t: '"5+ years"', c: "text-amber-600 dark:text-yellow-300" }, { t: ",", c: "text-foreground" }] },
+  { tokens: [{ t: "  experience", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": ", c: "text-foreground" }, { t: '"2+ years"', c: "text-amber-600 dark:text-yellow-300" }, { t: ",", c: "text-foreground" }] },
   { tokens: [{ t: "  available", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": ", c: "text-foreground" }, { t: "true", c: "text-orange-500 dark:text-orange-400" }, { t: ",", c: "text-foreground" }] },
   { tokens: [{ t: "", c: "" }] },
   { tokens: [{ t: "  passion", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": (", c: "text-foreground" }, { t: "coffee", c: "text-orange-500 dark:text-orange-400" }, { t: ") => ", c: "text-foreground" }, { t: "code", c: "text-violet-500 dark:text-violet-400" }, { t: ",", c: "text-foreground" }] },
@@ -24,7 +24,7 @@ const codeLines = [
   { tokens: [{ t: "", c: "" }] },
   { tokens: [{ t: "  skills", c: "text-cyan-600 dark:text-cyan-300" }, { t: ": [", c: "text-foreground" }] },
   { tokens: [{ t: '    "React"', c: "text-amber-600 dark:text-yellow-300" }, { t: ", ", c: "text-foreground" }, { t: '"Node.js"', c: "text-amber-600 dark:text-yellow-300" }, { t: ", ", c: "text-foreground" }, { t: '"TypeScript"', c: "text-amber-600 dark:text-yellow-300" }, { t: ",", c: "text-foreground" }] },
-  { tokens: [{ t: '    "PostgreSQL"', c: "text-amber-600 dark:text-yellow-300" }, { t: ", ", c: "text-foreground" }, { t: '"Docker"', c: "text-amber-600 dark:text-yellow-300" }, { t: ", ...", c: "text-muted-foreground" }] },
+  { tokens: [{ t: '    "PostgreSQL"', c: "text-amber-600 dark:text-yellow-300" }, { t: ", ", c: "text-foreground" }, { t: '"Go"', c: "text-amber-600 dark:text-yellow-300" }, { t: ", ", c: "text-foreground" }, { t: '"Flutter"', c: "text-amber-600 dark:text-yellow-300" }, { t: ", ...", c: "text-muted-foreground" }] },
   { tokens: [{ t: "  ]", c: "text-foreground" }] },
   { tokens: [{ t: "}", c: "text-foreground" }] },
   { tokens: [{ t: "", c: "" }] },
@@ -44,7 +44,6 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="relative flex flex-col gap-2 mb-10 sm:mb-12"
         >
-          {/* Big decorative number */}
           <motion.span
             initial={{ opacity: 0, scale: 1.4, filter: "blur(8px)" }}
             animate={inView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}

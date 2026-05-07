@@ -1,23 +1,35 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { GraduationCap, BookOpen } from "lucide-react";
+import { GraduationCap, Award } from "lucide-react";
 
 const education = [
   {
-    degree: "Bachelor's Degree in Computer Science",
-    institution: "Universite Hassan II",
-    location: "Casablanca, Morocco",
-    period: "2017 — 2021",
+    degree: "Licence Professionnelle — Ingénierie des Systèmes Informatiques et Logiciels",
+    institution: "EST Essaouira",
+    location: "Essaouira, Morocco",
+    period: "2023 — 2024",
     description:
-      "Studied core computer science fundamentals including algorithms, data structures, operating systems, databases, and software engineering principles. Graduated with honors.",
-    highlights: ["Algorithms & Data Structures", "Databases & SQL", "Software Engineering", "Networks & Security"],
+      "Advanced study of software engineering, system design, and professional IT practices. Focused on building scalable and maintainable software systems.",
+    highlights: ["Software Engineering", "System Architecture", "Web Development", "Project Management"],
   },
-];
-
-const certifications = [
-  { name: "MongoDB Certified Developer", issuer: "MongoDB University", year: "2022" },
-  { name: "Docker Certified Associate", issuer: "Docker, Inc.", year: "2023" },
-  { name: "AWS Cloud Practitioner", issuer: "Amazon Web Services", year: "2023" },
+  {
+    degree: "Diplôme Universitaire de Technologie — Génie Informatique",
+    institution: "EST Essaouira",
+    location: "Essaouira, Morocco",
+    period: "2021 — 2023",
+    description:
+      "Two-year technology degree covering computer science fundamentals, programming, databases, networks, and applied software development.",
+    highlights: ["Algorithms & Data Structures", "Databases", "Networks", "OOP & Design Patterns"],
+  },
+  {
+    degree: "Baccalauréat — Sciences Physiques et Chimiques",
+    institution: "Lycée Okba Bnou Nafie BirJdid",
+    location: "BirJdid, Morocco",
+    period: "2020 — 2021",
+    description:
+      "Scientific baccalaureate with specialisation in Physics and Chemistry, building strong analytical and problem-solving foundations.",
+    highlights: ["Physics", "Chemistry", "Mathematics", "Scientific Method"],
+  },
 ];
 
 export default function Education() {
@@ -46,86 +58,92 @@ export default function Education() {
           <h2 className="relative z-10 text-3xl md:text-4xl font-bold text-foreground">Academic Background</h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+        <div className="relative">
+          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-border/60" />
           <div className="space-y-6">
             {education.map((edu, i) => (
               <motion.div
                 key={edu.degree}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-card border border-border/60 rounded-2xl p-5 sm:p-6 hover:border-primary/30 transition-colors"
+                initial={{ opacity: 0, x: -20 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+                className="relative pl-16 md:pl-20"
                 data-testid={`education-${i}`}
               >
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
-                    <GraduationCap className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-foreground text-base leading-tight">{edu.degree}</h3>
-                    <p className="text-primary font-semibold text-sm mt-0.5">{edu.institution}</p>
-                    <p className="text-muted-foreground text-xs mt-0.5">{edu.location}</p>
-                  </div>
+                <div className="absolute left-4 md:left-5 top-1.5 w-5 h-5 rounded-full border-2 border-primary/40 bg-primary/10 flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                 </div>
 
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-mono text-muted-foreground bg-background border border-border/60 px-3 py-1 rounded-full">
-                    {edu.period}
-                  </span>
-                </div>
-
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">{edu.description}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  {edu.highlights.map((h) => (
-                    <span
-                      key={h}
-                      className="px-2.5 py-1 text-xs font-mono bg-primary/10 border border-primary/20 text-primary rounded-md"
-                      data-testid={`edu-highlight-${h.toLowerCase().replace(/\s+/g, "-")}`}
-                    >
-                      {h}
+                <div className="bg-card border border-border/60 rounded-2xl p-5 sm:p-6 hover:border-primary/30 transition-colors">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                      <GraduationCap className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-foreground text-base leading-tight">{edu.degree}</h3>
+                      <p className="text-primary font-semibold text-sm mt-0.5">{edu.institution}</p>
+                      <p className="text-muted-foreground text-xs mt-0.5">{edu.location}</p>
+                    </div>
+                    <span className="text-xs font-mono text-muted-foreground bg-background border border-border/60 px-3 py-1 rounded-full flex-shrink-0 whitespace-nowrap">
+                      {edu.period}
                     </span>
-                  ))}
+                  </div>
+
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{edu.description}</p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {edu.highlights.map((h) => (
+                      <span
+                        key={h}
+                        className="px-2.5 py-1 text-xs font-mono bg-primary/10 border border-primary/20 text-primary rounded-md"
+                        data-testid={`edu-highlight-${h.toLowerCase().replace(/\s+/g, "-")}`}
+                      >
+                        {h}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.25 }}
-          >
-            <div className="bg-card border border-border/60 rounded-2xl p-5 sm:p-6 hover:border-primary/30 transition-colors">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                  <BookOpen className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-bold text-foreground">Certifications</h3>
-              </div>
-              <div className="space-y-4">
-                {certifications.map((cert, i) => (
-                  <motion.div
-                    key={cert.name}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                    className="flex items-center justify-between p-3 rounded-lg bg-background border border-border/60 hover:border-primary/30 transition-colors"
-                    data-testid={`cert-${i}`}
-                  >
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">{cert.name}</p>
-                      <p className="text-xs text-muted-foreground">{cert.issuer}</p>
-                    </div>
-                    <span className="text-xs font-mono text-primary bg-primary/10 px-2.5 py-1 rounded-md">
-                      {cert.year}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
         </div>
+
+        {/* Languages spoken */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-8"
+        >
+          <div className="bg-card border border-border/60 rounded-2xl p-5 sm:p-6 hover:border-primary/30 transition-colors">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                <Award className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="font-bold text-foreground">Languages</h3>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {[
+                { lang: "Arabic", level: "Native", pct: 100 },
+                { lang: "French", level: "Professional", pct: 85 },
+                { lang: "English", level: "Professional", pct: 80 },
+              ].map((l) => (
+                <div key={l.lang} className="p-3 rounded-lg bg-background border border-border/60">
+                  <p className="text-sm font-semibold text-foreground">{l.lang}</p>
+                  <p className="text-xs text-muted-foreground mb-2">{l.level}</p>
+                  <div className="h-1 bg-muted rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full rounded-full bg-primary"
+                      initial={{ width: 0 }}
+                      animate={inView ? { width: `${l.pct}%` } : {}}
+                      transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -5,48 +5,59 @@ import TiltCard from "@/components/ui/TiltCard";
 
 const projects = [
   {
-    name: "TaskFlow",
+    name: "Smart Task Management Microservice",
     description:
-      "A real-time project management platform with drag-and-drop Kanban boards, team collaboration, task assignments, and Slack-style notifications. Built for distributed teams.",
-    tech: ["React", "Node.js", "Socket.io", "PostgreSQL", "Redis", "Docker"],
-    github: "https://github.com/zakariamachmach/taskflow",
+      "Scalable task management system built as a standalone microservice used by multiple applications. Features hierarchical tasks with automatic updates, secure multi-tenant access with JWT authentication, and modern interfaces including Kanban, sprint planning, and dashboards.",
+    tech: ["TypeScript", "React", "Node.js", "JWT", "PostgreSQL"],
+    github: "https://github.com/mchzakaria",
     demo: "#",
     gradient: "from-violet-500/10 to-indigo-500/10",
     border: "hover:border-violet-400/40",
     accent: "text-violet-500 dark:text-violet-400",
   },
   {
-    name: "ShopAI",
+    name: "Centralized Logging System",
     description:
-      "E-commerce platform with AI-powered product recommendations, dynamic pricing, and a seamless checkout flow. Handles thousands of SKUs with advanced search and filtering.",
-    tech: ["Next.js", "TypeScript", "NestJS", "MongoDB", "Stripe"],
-    github: "https://github.com/zakariamachmach/shopai",
+      "Centralized log management system using Go with an agent-to-server architecture for secure log transmission. Implements fault-tolerant delivery with local buffering and retries, and enables real-time log visualization via Server-Sent Events (SSE).",
+    tech: ["Go", "SQLite", "SSE", "REST API"],
+    github: "https://github.com/mchzakaria",
     demo: "#",
     gradient: "from-blue-500/10 to-cyan-500/10",
     border: "hover:border-blue-400/40",
     accent: "text-blue-500 dark:text-blue-400",
   },
   {
-    name: "DevBlog",
+    name: "Système de Gestion du Bureau d'Ordre",
     description:
-      "A developer-focused blogging platform with Markdown/MDX support, syntax highlighting, full-text search, tag-based navigation, and RSS feed generation.",
-    tech: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind CSS"],
-    github: "https://github.com/zakariamachmach/devblog",
+      "Centralised web application automating administrative flows for a financial firm. Manages mail routing, tracks regulatory documents with digital signatures, and ensures full visitor traceability.",
+    tech: ["MongoDB", "Express", "React", "Node.js", "TailwindCSS"],
+    github: "https://github.com/mchzakaria",
     demo: "#",
     gradient: "from-emerald-500/10 to-teal-500/10",
     border: "hover:border-emerald-400/40",
     accent: "text-emerald-600 dark:text-emerald-400",
   },
   {
-    name: "PortalHR",
+    name: "Plateforme de Gestion des Examens",
     description:
-      "A comprehensive HR management system featuring employee onboarding, leave management, payroll summaries, performance reviews, and a role-based access control system.",
-    tech: ["React", "NestJS", "GraphQL", "PostgreSQL", "Docker"],
-    github: "https://github.com/zakariamachmach/portalhr",
+      "University exam management platform enabling scheduling, student assignment, room allocation, and result tracking — built with a modern React frontend and a RESTful Express backend.",
+    tech: ["React", "ExpressJS", "MongoDB", "TailwindCSS"],
+    github: "https://github.com/mchzakaria",
     demo: "#",
     gradient: "from-orange-500/10 to-amber-500/10",
     border: "hover:border-orange-400/40",
     accent: "text-orange-500 dark:text-orange-400",
+  },
+  {
+    name: "Application Mobile POS",
+    description:
+      "Mobile Point of Sale system designed and built during an internship at Voie Informatique. Covers product management, sales transactions, inventory tracking, and reporting — all within a smooth Flutter UI.",
+    tech: ["Flutter", "Dart", "PHP", "MySQL"],
+    github: "https://github.com/mchzakaria",
+    demo: "#",
+    gradient: "from-pink-500/10 to-rose-500/10",
+    border: "hover:border-pink-400/40",
+    accent: "text-pink-500 dark:text-pink-400",
   },
 ];
 
@@ -75,7 +86,7 @@ export default function Projects() {
           <span className="relative z-10 text-primary font-mono text-sm tracking-widest uppercase">04. Projects</span>
           <h2 className="relative z-10 text-3xl md:text-4xl font-bold text-foreground">Selected Work</h2>
           <p className="relative z-10 text-muted-foreground max-w-xl mt-2">
-            A selection of projects that reflect my range — from real-time apps to e-commerce and beyond.
+            Real projects — from microservices and real-time systems to mobile apps and admin platforms.
           </p>
         </motion.div>
 
@@ -85,11 +96,11 @@ export default function Projects() {
               key={project.name}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.12 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <TiltCard
                 className={`group relative rounded-2xl border border-border/60 bg-gradient-to-br ${project.gradient} p-5 sm:p-6 ${project.border} transition-all duration-300 flex flex-col h-full`}
-                data-testid={`project-card-${project.name.toLowerCase()}`}
+                data-testid={`project-card-${i}`}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-10 h-10 rounded-lg bg-background/70 border border-border/60 flex items-center justify-center">
@@ -101,23 +112,25 @@ export default function Projects() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-foreground transition-colors"
-                      data-testid={`project-github-${project.name.toLowerCase()}`}
+                      data-testid={`project-github-${i}`}
                     >
                       <Github className="w-4 h-4" />
                     </a>
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
-                      data-testid={`project-demo-${project.name.toLowerCase()}`}
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
+                    {project.demo !== "#" && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
+                        data-testid={`project-demo-${i}`}
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-foreground mb-2">{project.name}</h3>
+                <h3 className="text-lg font-bold text-foreground mb-2 leading-tight">{project.name}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2">

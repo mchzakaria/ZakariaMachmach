@@ -43,7 +43,7 @@ export default function Footer() {
 
           <div className="flex items-center gap-3">
             <a
-              href="https://github.com/zakariamachmach"
+              href="https://github.com/mchzakaria"
               target="_blank"
               rel="noopener noreferrer"
               className="w-9 h-9 rounded-lg border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all hover:bg-primary/10"
@@ -61,7 +61,7 @@ export default function Footer() {
               <Linkedin className="w-4 h-4" />
             </a>
             <a
-              href="mailto:zakaria.machmach@gmail.com"
+              href="mailto:zakariamachmach03@gmail.com"
               className="w-9 h-9 rounded-lg border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all hover:bg-primary/10"
               data-testid="footer-email"
             >

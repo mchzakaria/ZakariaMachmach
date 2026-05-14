@@ -61,9 +61,22 @@ const projects = [
   },
 ];
 
+import { useQuery } from "@tanstack/react-query";
+
 export default function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const { data } = useQuery({
+    queryKey: ["/api/data"],
+    queryFn: async () => {
+      const res = await fetch("/api/data");
+      if (!res.ok) throw new Error("Failed to fetch data");
+      return res.json();
+    }
+  });
+
+  const displayProjects = data?.projects || projects;
 
   return (
     <section id="projects" className="py-16 sm:py-24 px-4 sm:px-6 bg-card/30" data-testid="section-projects" ref={ref}>
@@ -91,7 +104,7 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 gap-5 sm:gap-6" style={{ perspective: "1200px" }}>
-          {projects.map((project, i) => (
+          {displayProjects.map((project: any, i: number) => (
             <motion.div
               key={project.name}
               initial={{ opacity: 0, y: 30 }}
@@ -134,7 +147,7 @@ export default function Projects() {
                 <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
+                  {project.tech?.map((t: string) => (
                     <span
                       key={t}
                       className="px-2.5 py-1 text-xs font-mono bg-background/70 border border-border/60 text-muted-foreground rounded-md hover:text-foreground transition-colors"

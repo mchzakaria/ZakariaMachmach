@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Briefcase } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 const experiences = [
   {
@@ -42,6 +43,17 @@ export default function Experience() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
+  const { data } = useQuery({
+    queryKey: ["/api/data"],
+    queryFn: async () => {
+      const res = await fetch("/api/data");
+      if (!res.ok) throw new Error("Failed to fetch data");
+      return res.json();
+    }
+  });
+
+  const displayExperiences = data?.experience || experiences;
+
   return (
     <section id="experience" className="py-16 sm:py-24 px-4 sm:px-6" data-testid="section-experience" ref={ref}>
       <div className="max-w-5xl mx-auto">
@@ -68,7 +80,7 @@ export default function Experience() {
           <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-border/60" />
 
           <div className="space-y-8">
-            {experiences.map((exp, i) => (
+            {displayExperiences.map((exp: any, i: number) => (
               <motion.div
                 key={exp.company + exp.role}
                 initial={{ opacity: 0, x: -20 }}
@@ -106,7 +118,7 @@ export default function Experience() {
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">{exp.description}</p>
                   <div className="flex flex-wrap gap-2">
-                    {exp.stack.map((tech) => (
+                    {exp.stack?.map((tech: string) => (
                       <span
                         key={tech}
                         className="px-2.5 py-1 text-xs font-mono bg-background border border-border/60 text-muted-foreground rounded-md"

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { GraduationCap, Award } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 const education = [
   {
@@ -32,9 +33,27 @@ const education = [
   },
 ];
 
+const DEFAULT_LANGUAGES = [
+  { lang: "Arabic", level: "Native", pct: 100 },
+  { lang: "French", level: "Professional", pct: 85 },
+  { lang: "English", level: "Professional", pct: 80 },
+];
+
 export default function Education() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const { data } = useQuery({
+    queryKey: ["/api/data"],
+    queryFn: async () => {
+      const res = await fetch("/api/data");
+      if (!res.ok) throw new Error("Failed to fetch data");
+      return res.json();
+    }
+  });
+
+  const displayEducation = data?.education || education;
+  const displayLanguages = data?.languages || DEFAULT_LANGUAGES;
 
   return (
     <section id="education" className="py-16 sm:py-24 px-4 sm:px-6 bg-card/30" data-testid="section-education" ref={ref}>
@@ -61,7 +80,7 @@ export default function Education() {
         <div className="relative">
           <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-border/60" />
           <div className="space-y-6">
-            {education.map((edu, i) => (
+            {displayEducation.map((edu: any, i: number) => (
               <motion.div
                 key={edu.degree}
                 initial={{ opacity: 0, x: -20 }}
@@ -92,7 +111,7 @@ export default function Education() {
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">{edu.description}</p>
 
                   <div className="flex flex-wrap gap-2">
-                    {edu.highlights.map((h) => (
+                    {edu.highlights?.map((h: string) => (
                       <span
                         key={h}
                         className="px-2.5 py-1 text-xs font-mono bg-primary/10 border border-primary/20 text-primary rounded-md"
@@ -123,11 +142,7 @@ export default function Education() {
               <h3 className="font-bold text-foreground">Languages</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {[
-                { lang: "Arabic", level: "Native", pct: 100 },
-                { lang: "French", level: "Professional", pct: 85 },
-                { lang: "English", level: "Professional", pct: 80 },
-              ].map((l) => (
+              {displayLanguages.map((l: any) => (
                 <div key={l.lang} className="p-3 rounded-lg bg-background border border-border/60">
                   <p className="text-sm font-semibold text-foreground">{l.lang}</p>
                   <p className="text-xs text-muted-foreground mb-2">{l.level}</p>

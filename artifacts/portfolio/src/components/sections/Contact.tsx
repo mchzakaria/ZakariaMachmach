@@ -58,7 +58,7 @@ export default function Contact() {
               {[
                 { href: "mailto:zakariamachmach03@gmail.com", icon: Mail, label: "Email", value: "zakariamachmach03@gmail.com", testId: "contact-email-link" },
                 { href: "tel:+212682685984", icon: Phone, label: "Phone", value: "+212 682 685 984", testId: "contact-phone-link" },
-                { href: "https://linkedin.com/in/zakariamachmach", icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/zakariamachmach", testId: "contact-linkedin-link" },
+                { href: "https://www.linkedin.com/in/zakaria-machmach-094428225/", icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/zakariamachmach", testId: "contact-linkedin-link" },
                 { href: "https://github.com/mchzakaria", icon: Github, label: "GitHub", value: "github.com/mchzakaria", testId: "contact-github-link" },
               ].map(({ href, icon: Icon, label, value, testId }) => (
                 <MagneticButton

@@ -97,9 +97,30 @@ function ContributionGrid({ level }: { level: number }) {
   );
 }
 
+import { useQuery } from "@tanstack/react-query";
+
+const iconMap: Record<string, any> = {
+  SiReact, SiTypescript, SiTailwindcss, SiJavascript,
+  SiNodedotjs, SiExpress, SiPhp, SiSpring, SiSymfony,
+  SiPostgresql, SiMongodb, SiMysql, SiRedis, SiSupabase,
+  SiGit, SiDocker, SiDart, SiFlutter, SiGo,
+  Globe, Code2
+};
+
 export default function Skills() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["/api/data"],
+    queryFn: async () => {
+      const res = await fetch("/api/data");
+      if (!res.ok) throw new Error("Failed to fetch skills data");
+      return res.json();
+    }
+  });
+
+  const displayCategories = data?.categories || categories;
 
   return (
     <section id="skills" className="py-16 sm:py-24 px-4 sm:px-6 bg-muted/30" data-testid="section-skills" ref={ref}>
@@ -127,7 +148,7 @@ export default function Skills() {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
-          {categories.map((cat, ci) => (
+          {displayCategories.map((cat: any, ci: number) => (
             <motion.div
               key={cat.title}
               initial={{ opacity: 0, y: 30 }}
@@ -142,8 +163,8 @@ export default function Skills() {
                 {cat.title}
               </h3>
               <div className="space-y-3">
-                {cat.skills.map((skill, si) => {
-                  const Icon = skill.icon;
+                {cat.skills.map((skill: any, si: number) => {
+                  const Icon = typeof skill.icon === 'string' ? iconMap[skill.icon] : skill.icon;
                   return (
                     <motion.div
                       key={skill.name}
@@ -179,7 +200,7 @@ export default function Skills() {
               </div>
               <div>
                 <p className="text-xs font-mono text-muted-foreground mt-4 mb-1">Activity graph</p>
-                <ContributionGrid level={cat.skills.reduce((s, sk) => s + sk.level, 0) / cat.skills.length} />
+                <ContributionGrid level={displayCategories[ci].skills.reduce((s: number, sk: any) => s + sk.level, 0) / cat.skills.length} />
               </div>
             </motion.div>
           ))}

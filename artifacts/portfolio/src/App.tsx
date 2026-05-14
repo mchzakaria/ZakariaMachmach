@@ -13,7 +13,14 @@ import KonamiEasterEgg from "@/components/KonamiEasterEgg";
 import { useKonamiCode } from "@/hooks/useKonamiCode";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30 * 1000,
+      retry: 1,
+    },
+  },
+});
 
 function AppContent() {
   const [loaded, setLoaded] = useState(false);

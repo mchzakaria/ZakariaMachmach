@@ -52,7 +52,7 @@ export default function Navbar() {
             <Code2 className="w-4 h-4 text-primary" />
           </div>
           <span className="font-mono text-sm font-bold text-foreground tracking-wider">
-            ZM<span className="text-primary">.</span>
+            Zakaria MACHMACH<span className="text-primary">.</span>
           </span>
         </a>
 

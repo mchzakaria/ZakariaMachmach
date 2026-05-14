@@ -16,7 +16,7 @@ const sections = [
 const actions = [
   { id: "email", label: "Send Email", icon: "✉️", description: "zakariamachmach03@gmail.com", action: () => window.open("mailto:zakariamachmach03@gmail.com") },
   { id: "github", label: "Open GitHub", icon: "🐙", description: "github.com/mchzakaria", action: () => window.open("https://github.com/mchzakaria", "_blank") },
-  { id: "linkedin", label: "Open LinkedIn", icon: "💼", description: "linkedin.com/in/zakariamachmach", action: () => window.open("https://linkedin.com/in/zakariamachmach", "_blank") },
+  { id: "linkedin", label: "Open LinkedIn", icon: "💼", description: "linkedin.com/in/zakariamachmach", action: () => window.open("https://www.linkedin.com/in/zakaria-machmach-094428225/", "_blank") },
 ];
 
 export default function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void }) {

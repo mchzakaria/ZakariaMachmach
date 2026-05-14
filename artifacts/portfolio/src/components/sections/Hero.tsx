@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail, Terminal, Camera } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Mail, Terminal, FileText } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
+import profilePic from "@assets/ZakariaMachmachPic.jpg";
+import { useQuery } from "@tanstack/react-query";
+
+const ICON_MAP: Record<string, React.ElementType> = { Github, Linkedin, Mail };
+
 
 const TERMINAL_SEQUENCE = [
   { cmd: "whoami", output: "zakaria.machmach", type: "result" as const },
@@ -109,9 +114,29 @@ export default function Hero() {
   const [showMain, setShowMain] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
+  const { data } = useQuery({
+    queryKey: ["/api/data"],
+    queryFn: async () => {
+      const res = await fetch("/api/data");
+      if (!res.ok) throw new Error("Failed to fetch data");
+      return res.json();
+    }
+  });
+
+  const heroData = data?.hero;
+  const terminalSequence = heroData?.terminal || TERMINAL_SEQUENCE;
+  const heroName = heroData?.name || "Zakaria MACHMACH";
+  const heroRole = heroData?.role || "Full Stack Web Developer";
+  const heroCV = heroData?.cv || "/cv.pdf";
+  const heroLinks = heroData?.links || [
+    { href: "https://github.com/mchzakaria", icon: "Github", testId: "hero-link-github" },
+    { href: "https://www.linkedin.com/in/zakaria-machmach-094428225/", icon: "Linkedin", testId: "hero-link-linkedin" },
+    { href: "mailto:zakariamachmach03@gmail.com", icon: "Mail", testId: "hero-link-email" },
+  ];
+
   const handleStepDone = (i: number) => {
     setCompletedSteps((p) => [...p, i]);
-    if (i < TERMINAL_SEQUENCE.length - 1) {
+    if (i < terminalSequence.length - 1) {
       setTimeout(() => setActiveStep(i + 1), 200);
     } else {
       setTimeout(() => setShowMain(true), 700);
@@ -164,18 +189,10 @@ export default function Hero() {
                 style={{ boxShadow: "0 0 30px rgba(139,92,246,0.3)" }}
               >
                 <img
-                  src="/avatar.jpg"
+                  src={profilePic}
                   alt="Zakaria MACHMACH"
                   className="w-full h-full object-cover"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                 />
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
-                  <span className="text-4xl font-extrabold text-primary font-mono">ZM</span>
-                  <div className="mt-2 flex items-center gap-1 text-muted-foreground">
-                    <Camera className="w-3 h-3" />
-                    <span className="text-xs font-mono">add photo</span>
-                  </div>
-                </div>
               </div>
               <div className="absolute bottom-2 right-2 z-20 w-5 h-5 rounded-full bg-emerald-500 border-2 border-background shadow-lg shadow-emerald-500/50">
                 <motion.div
@@ -204,7 +221,7 @@ export default function Hero() {
               </div>
             </div>
             <div className="p-4 sm:p-5 font-mono text-sm space-y-3 min-h-[160px]">
-              {TERMINAL_SEQUENCE.map((step, i) => (
+              {terminalSequence.map((step: any, i: number) => (
                 (i <= activeStep || completedSteps.includes(i)) && (
                   <TerminalLine
                     key={i}
@@ -228,10 +245,10 @@ export default function Hero() {
           className="text-center space-y-6"
         >
           <div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight glitch-text leading-tight" data-text="Zakaria MACHMACH">
-              Zakaria{" "}
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight glitch-text leading-tight" data-text={heroName}>
+              {heroName.split(" ")[0]}{" "}
               <span className="text-primary relative inline-block">
-                MACHMACH
+                {heroName.split(" ").slice(1).join(" ")}
                 <motion.span
                   className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary/50"
                   initial={{ scaleX: 0 }}
@@ -242,7 +259,7 @@ export default function Hero() {
             </h1>
             <p className="text-muted-foreground font-mono text-base sm:text-lg mt-3">
               <span className="text-primary">const</span> role ={" "}
-              <span className="text-yellow-600 dark:text-yellow-400">"Full Stack Web Developer"</span>
+              <span className="text-yellow-600 dark:text-yellow-400">"{heroRole}"</span>
             </p>
           </div>
 
@@ -264,25 +281,37 @@ export default function Hero() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3">
-            {[
-              { href: "https://github.com/mchzakaria", icon: Github, testId: "hero-link-github" },
-              { href: "https://linkedin.com/in/zakariamachmach", icon: Linkedin, testId: "hero-link-linkedin" },
-              { href: "mailto:zakariamachmach03@gmail.com", icon: Mail, testId: "hero-link-email" },
-            ].map(({ href, icon: Icon, testId }) => (
-              <MagneticButton
-                key={testId}
-                as="a"
-                href={href}
-                target={href.startsWith("mailto") ? undefined : "_blank"}
-                rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className="w-10 h-10 rounded-lg border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all hover:bg-primary/10"
-                data-testid={testId}
-                strength={0.5}
-                radius={60}
-              >
-                <Icon className="w-4 h-4" />
-              </MagneticButton>
-            ))}
+            {heroLinks.map(({ href, icon, testId }: { href: string; icon: string; testId: string }) => {
+              const Icon = ICON_MAP[icon] || Mail;
+              return (
+                <MagneticButton
+                  key={testId}
+                  as="a"
+                  href={href}
+                  target={href.startsWith("mailto") ? undefined : "_blank"}
+                  rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                  className="w-10 h-10 rounded-lg border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all hover:bg-primary/10"
+                  data-testid={testId}
+                  strength={0.5}
+                  radius={60}
+                >
+                  <Icon className="w-4 h-4" />
+                </MagneticButton>
+              );
+            })}
+            <MagneticButton
+              as="a"
+              href={heroCV}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all hover:bg-primary/10 text-xs font-mono"
+              data-testid="hero-link-cv"
+              strength={0.5}
+              radius={60}
+            >
+              <FileText className="w-3.5 h-3.5" />
+              CV
+            </MagneticButton>
             <MoroccoTime />
           </div>
         </motion.div>

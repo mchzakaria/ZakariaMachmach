@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const lines = [
   { text: "> npm run portfolio", delay: 0, color: "text-green-400" },
   { text: "  Building Zakaria MACHMACH...", delay: 400, color: "text-muted-foreground" },
-  { text: "  ✓ Experience loaded (5+ years)", delay: 900, color: "text-emerald-400" },
+  { text: "  ✓ Experience loaded (2+ years)", delay: 900, color: "text-emerald-400" },
   { text: "  ✓ Projects compiled (30+)", delay: 1300, color: "text-emerald-400" },
   { text: "  ✓ Skills optimized (20+ technologies)", delay: 1700, color: "text-emerald-400" },
   { text: "  ✓ Passion level: maximum", delay: 2000, color: "text-emerald-400" },

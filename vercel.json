@@ -1,8 +1,4 @@
 {
-  "buildCommand": "cp lib/db/data.json artifacts/portfolio/public/data.json && pnpm --filter @workspace/portfolio build",
-  "outputDirectory": "artifacts/portfolio/dist/public",
-  "installCommand": "pnpm install --no-frozen-lockfile",
-  "rewrites": [
-    { "source": "/api/data", "destination": "/data.json" }
-  ]
+  "buildCommand": "bash build.sh",
+  "installCommand": "pnpm install --no-frozen-lockfile"
 }

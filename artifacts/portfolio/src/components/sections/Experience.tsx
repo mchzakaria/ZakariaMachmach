@@ -1,58 +1,13 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Briefcase } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-
-const experiences = [
-  {
-    role: "Full-Stack Developer",
-    company: "TYTHON",
-    period: "Oct 2025 — Present",
-    location: "Casablanca, Morocco",
-    type: "Full-time",
-    description:
-      "Developing CRUD interfaces connected to APIs with integrated statistical dashboards. Implemented real-time messaging between users and built a REST API using ExpressJS for backend data management.",
-    stack: ["React", "ExpressJS", "Socket.io", "Node.js", "PostgreSQL"],
-    current: true,
-  },
-  {
-    role: "Full-Stack Developer Intern",
-    company: "Zine Capital Invest",
-    period: "Apr 2024 — Jun 2024",
-    location: "Casablanca, Morocco",
-    type: "Internship",
-    description:
-      "Designed and built a Digital Management System for the Bureau d'Ordre using the MERN stack — centralising administrative flows, managing mail, tracking regulations with digital signatures, and ensuring visitor traceability.",
-    stack: ["MongoDB", "Express", "React", "Node.js", "TailwindCSS"],
-    current: false,
-  },
-  {
-    role: "Mobile App Developer Intern",
-    company: "Voie Informatique",
-    period: "Apr 2023 — Jun 2023",
-    location: "Casablanca, Morocco",
-    type: "Internship",
-    description:
-      "Conceived and developed a mobile Point of Sale (POS) system from scratch, covering requirements analysis, UI design, and full implementation using the Flutter framework.",
-    stack: ["Flutter", "Dart", "PHP", "MySQL"],
-    current: false,
-  },
-];
+import { fallbackPortfolioData, usePortfolioData, type Experience as ExperienceItem } from "@/lib/portfolioData";
 
 export default function Experience() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const { data } = useQuery({
-    queryKey: ["/api/data"],
-    queryFn: async () => {
-      const res = await fetch("/api/data");
-      if (!res.ok) throw new Error("Failed to fetch data");
-      return res.json();
-    }
-  });
-
-  const displayExperiences = data?.experience || experiences;
+  const { data = fallbackPortfolioData } = usePortfolioData();
+  const displayExperiences = data.experience;
 
   return (
     <section id="experience" className="py-16 sm:py-24 px-4 sm:px-6" data-testid="section-experience" ref={ref}>
@@ -80,7 +35,7 @@ export default function Experience() {
           <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-border/60" />
 
           <div className="space-y-8">
-            {displayExperiences.map((exp: any, i: number) => (
+            {displayExperiences.map((exp: ExperienceItem, i: number) => (
               <motion.div
                 key={exp.company + exp.role}
                 initial={{ opacity: 0, x: -20 }}
@@ -118,7 +73,7 @@ export default function Experience() {
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">{exp.description}</p>
                   <div className="flex flex-wrap gap-2">
-                    {exp.stack?.map((tech: string) => (
+                    {exp.stack.map((tech) => (
                       <span
                         key={tech}
                         className="px-2.5 py-1 text-xs font-mono bg-background border border-border/60 text-muted-foreground rounded-md"

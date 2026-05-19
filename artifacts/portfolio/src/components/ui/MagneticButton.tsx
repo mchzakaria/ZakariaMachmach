@@ -12,6 +12,7 @@ interface MagneticButtonProps {
   target?: string;
   rel?: string;
   "data-testid"?: string;
+  disabled?: boolean;
 }
 
 export default function MagneticButton({
@@ -25,6 +26,7 @@ export default function MagneticButton({
   target,
   rel,
   "data-testid": testId,
+  disabled,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -72,6 +74,7 @@ export default function MagneticButton({
     <motion.button
       ref={ref as React.Ref<HTMLButtonElement>}
       onClick={onClick}
+      disabled={disabled}
       {...motionProps}
     >
       {children}

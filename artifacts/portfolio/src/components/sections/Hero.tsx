@@ -3,18 +3,9 @@ import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Terminal, FileText } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
 import profilePic from "@assets/ZakariaMachmachPic.jpg";
-import { useQuery } from "@tanstack/react-query";
+import { fallbackPortfolioData, usePortfolioData, type HeroLink } from "@/lib/portfolioData";
 
 const ICON_MAP: Record<string, React.ElementType> = { Github, Linkedin, Mail };
-
-
-const TERMINAL_SEQUENCE = [
-  { cmd: "whoami", output: "zakaria.machmach", type: "result" as const },
-  { cmd: "cat role.txt", output: "Full Stack Web Developer", type: "result" as const },
-  { cmd: "ls skills/", output: "React/  Node.js/  TypeScript/  PostgreSQL/  Go/  ...", type: "result" as const },
-  { cmd: "cat status.json", output: '{ "available": true, "location": "Casablanca, Morocco" }', type: "result" as const },
-  { cmd: "./run portfolio.sh", output: null, type: "action" as const },
-];
 
 function useTypewriter(text: string, speed = 45, active = true) {
   const [displayed, setDisplayed] = useState("");
@@ -50,7 +41,7 @@ function TerminalLine({ cmd, output, type, active, onDone }: {
   return (
     <div className="space-y-0.5">
       <div className="flex items-center gap-2 min-w-0">
-        <span className="text-emerald-500 flex-shrink-0">❯</span>
+        <span className="text-emerald-500 flex-shrink-0">&gt;</span>
         <span className="text-foreground font-mono truncate">
           {displayed}
           {!done && <span className="inline-block w-2 h-4 bg-primary ml-0.5 animate-pulse align-text-bottom" />}
@@ -69,7 +60,7 @@ function TerminalLine({ cmd, output, type, active, onDone }: {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
           className="pl-5 font-mono text-sm text-primary"
         >
-          ✓ Portfolio ready. Welcome.
+          Portfolio ready. Welcome.
         </motion.div>
       )}
     </div>
@@ -104,7 +95,7 @@ function MoroccoTime() {
       data-testid="morocco-time"
     >
       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-      <span>🇲🇦 Casablanca · {time} WET</span>
+      <span>Casablanca - {time} WET</span>
     </div>
   );
 }
@@ -114,25 +105,13 @@ export default function Hero() {
   const [showMain, setShowMain] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
-  const { data } = useQuery({
-    queryKey: ["/api/data"],
-    queryFn: async () => {
-      const res = await fetch("/api/data");
-      if (!res.ok) throw new Error("Failed to fetch data");
-      return res.json();
-    }
-  });
+  const { data = fallbackPortfolioData } = usePortfolioData();
 
-  const heroData = data?.hero;
-  const terminalSequence = heroData?.terminal || TERMINAL_SEQUENCE;
-  const heroName = heroData?.name || "Zakaria MACHMACH";
-  const heroRole = heroData?.role || "Full Stack Web Developer";
-  const heroCV = heroData?.cv || "/cv.pdf";
-  const heroLinks = heroData?.links || [
-    { href: "https://github.com/mchzakaria", icon: "Github", testId: "hero-link-github" },
-    { href: "https://www.linkedin.com/in/zakaria-machmach-094428225/", icon: "Linkedin", testId: "hero-link-linkedin" },
-    { href: "mailto:zakariamachmach03@gmail.com", icon: "Mail", testId: "hero-link-email" },
-  ];
+  const terminalSequence = data.hero.terminal;
+  const heroName = data.hero.name;
+  const heroRole = data.hero.role;
+  const heroCV = data.hero.cv;
+  const heroLinks = data.hero.links;
 
   const handleStepDone = (i: number) => {
     setCompletedSteps((p) => [...p, i]);
@@ -155,10 +134,10 @@ export default function Hero() {
     >
       <div className="relative z-10 max-w-5xl mx-auto w-full">
 
-        {/* Profile photo + Terminal side by side on lg, stacked on mobile */}
+        {/* Profile photo + terminal side by side on lg, stacked on mobile */}
         <div className="flex flex-col lg:flex-row items-center gap-8 mb-8">
 
-          {/* Profile photo — circular */}
+          {/* Profile photo - circular */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -217,11 +196,11 @@ export default function Hero() {
               <div className="w-3 h-3 rounded-full bg-green-500/80" />
               <div className="flex items-center gap-1.5 ml-2">
                 <Terminal className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-xs font-mono text-muted-foreground truncate">portfolio — ~/ — zsh</span>
+                <span className="text-xs font-mono text-muted-foreground truncate">portfolio - ~/ - zsh</span>
               </div>
             </div>
             <div className="p-4 sm:p-5 font-mono text-sm space-y-3 min-h-[160px]">
-              {terminalSequence.map((step: any, i: number) => (
+              {terminalSequence.map((step, i) => (
                 (i <= activeStep || completedSteps.includes(i)) && (
                   <TerminalLine
                     key={i}
@@ -281,7 +260,7 @@ export default function Hero() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3">
-            {heroLinks.map(({ href, icon, testId }: { href: string; icon: string; testId: string }) => {
+            {heroLinks.map(({ href, icon, testId }: HeroLink) => {
               const Icon = ICON_MAP[icon] || Mail;
               return (
                 <MagneticButton

@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 const lines = [
   { text: "> npm run portfolio", delay: 0, color: "text-green-400" },
   { text: "  Building Zakaria MACHMACH...", delay: 400, color: "text-muted-foreground" },
-  { text: "  ✓ Experience loaded (2+ years)", delay: 900, color: "text-emerald-400" },
-  { text: "  ✓ Projects compiled (30+)", delay: 1300, color: "text-emerald-400" },
-  { text: "  ✓ Skills optimized (20+ technologies)", delay: 1700, color: "text-emerald-400" },
-  { text: "  ✓ Passion level: maximum", delay: 2000, color: "text-emerald-400" },
-  { text: "  Ready in 0.1ms  ⚡", delay: 2300, color: "text-primary font-bold" },
+  { text: "  OK Experience loaded (2+ years)", delay: 900, color: "text-emerald-400" },
+  { text: "  OK Projects compiled (30+)", delay: 1300, color: "text-emerald-400" },
+  { text: "  OK Skills optimized (20+ technologies)", delay: 1700, color: "text-emerald-400" },
+  { text: "  OK Passion level: maximum", delay: 2000, color: "text-emerald-400" },
+  { text: "  Ready in 0.1ms", delay: 2300, color: "text-primary font-bold" },
 ];
 
 export default function LoadingScreen({ onDone }: { onDone: () => void }) {
@@ -44,7 +44,7 @@ export default function LoadingScreen({ onDone }: { onDone: () => void }) {
                 <div className="w-3 h-3 rounded-full bg-red-500/80" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
                 <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                <span className="ml-2 text-xs font-mono text-muted-foreground">portfolio — zsh</span>
+                <span className="ml-2 text-xs font-mono text-muted-foreground">portfolio - zsh</span>
               </div>
               <div className="p-6 font-mono text-sm space-y-2 min-h-[200px]">
                 {lines.map((line, i) => (

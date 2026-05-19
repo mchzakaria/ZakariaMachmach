@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const pos = useRef({ x: -100, y: -100 });
@@ -10,6 +11,16 @@ export default function CustomCursor() {
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
+    const media = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setEnabled(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+
     const move = (e: MouseEvent) => {
       pos.current = { x: e.clientX, y: e.clientY };
     };
@@ -50,7 +61,9 @@ export default function CustomCursor() {
       window.removeEventListener("mouseup", up);
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>

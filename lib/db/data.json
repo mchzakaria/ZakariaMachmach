@@ -17,14 +17,8 @@
     "cv": "/cv.pdf"
   },
   "about": {
-    "code": [
-      { "tokens": [{ "t": "const", "c": "text-violet-500 dark:text-violet-400" }, { "t": " developer", "c": "text-blue-600 dark:text-blue-300" }, { "t": " = {", "c": "text-foreground" }] },
-      { "tokens": [{ "t": "  name", "c": "text-cyan-600 dark:text-cyan-300" }, { "t": ": ", "c": "text-foreground" }, { "t": "\"Zakaria MACHMACH\"", "c": "text-amber-600 dark:text-yellow-300" }, { "t": ",", "c": "text-foreground" }] },
-      { "tokens": [{ "t": "  role", "c": "text-cyan-600 dark:text-cyan-300" }, { "t": ": ", "c": "text-foreground" }, { "t": "\"Full Stack Web Developer\"", "c": "text-amber-600 dark:text-yellow-300" }, { "t": ",", "c": "text-foreground" }] },
-      { "tokens": [{ "t": "  location", "c": "text-cyan-600 dark:text-cyan-300" }, { "t": ": ", "c": "text-foreground" }, { "t": "\"Casablanca, Morocco\"", "c": "text-amber-600 dark:text-yellow-300" }, { "t": ",", "c": "text-foreground" }] },
-      { "tokens": [{ "t": "  experience", "c": "text-cyan-600 dark:text-cyan-300" }, { "t": ": ", "c": "text-foreground" }, { "t": "\"2+ years\"", "c": "text-amber-600 dark:text-yellow-300" }, { "t": ",", "c": "text-foreground" }] },
-      { "tokens": [{ "t": "  available", "c": "text-cyan-600 dark:text-cyan-300" }, { "t": ": ", "c": "text-foreground" }, { "t": "true", "c": "text-orange-500 dark:text-orange-400" }, { "t": ",", "c": "text-foreground" }] }
-    ]
+    "summary": "Full Stack Web Developer based in Casablanca, Morocco, focused on practical web, API, real-time, and mobile systems.",
+    "superpower": "making complex systems simple to use"
   },
   "categories": [
     {
@@ -86,6 +80,16 @@
   ],
   "projects": [
     {
+      "name": "MCP Server - Cloud-Hosted AI Gateway",
+      "description": "Designed and developed a production-ready cloud-hosted MCP server that exposes a SaaS platform as structured AI-callable tools, enabling AI clients like Claude and Cursor or any AI Agent to interact with the platform through natural language. Built with HTTP + SSE transport, session-based authentication, and a modular architecture supporting scalable multi-user integrations and dynamically extensible platform modules.",
+      "tech": ["TypeScript", "Node.js", "Express.js", "MCP SDK", "HTTP + SSE", "Zod", "Axios", "Docker"],
+      "github": "https://github.com/mchzakaria",
+      "demo": "#",
+      "gradient": "from-cyan-500/10 to-blue-500/10",
+      "border": "hover:border-cyan-400/40",
+      "accent": "text-cyan-500 dark:text-cyan-400"
+    },
+    {
       "name": "Smart Task Management Microservice",
       "description": "Scalable task management system built as a standalone microservice used by multiple applications. Features hierarchical tasks with automatic updates, secure multi-tenant access with JWT authentication, and modern interfaces including Kanban, sprint planning, and dashboards.",
       "tech": ["TypeScript", "React", "Node.js", "JWT", "PostgreSQL"],
@@ -97,7 +101,7 @@
     },
     {
       "name": "Centralized Logging System",
-      "description": "Centralized log management system using Go with an agent-to-server architecture for secure log transmission. Implements fault-tolerant delivery with local buffering and retries, and enables real-time log visualization via Server-Sent Events (SSE).",
+      "description": "Centralized log management system using Go with an agent-to-server architecture for secure log transmission. Implements fault-tolerant delivery with local buffering and retries, and enables real-time log visualization via Server-Sent Events.",
       "tech": ["Go", "SQLite", "SSE", "REST API"],
       "github": "https://github.com/mchzakaria",
       "demo": "#",
@@ -106,7 +110,7 @@
       "accent": "text-blue-500 dark:text-blue-400"
     },
     {
-      "name": "Système de Gestion du Bureau d'Ordre",
+      "name": "Systeme de Gestion du Bureau d'Ordre",
       "description": "Centralised web application automating administrative flows for a financial firm. Manages mail routing, tracks regulatory documents with digital signatures, and ensures full visitor traceability.",
       "tech": ["MongoDB", "Express", "React", "Node.js", "TailwindCSS"],
       "github": "https://github.com/mchzakaria",
@@ -117,7 +121,7 @@
     },
     {
       "name": "Plateforme de Gestion des Examens",
-      "description": "University exam management platform enabling scheduling, student assignment, room allocation, and result tracking — built with a modern React frontend and a RESTful Express backend.",
+      "description": "University exam management platform enabling scheduling, student assignment, room allocation, and result tracking - built with a modern React frontend and a RESTful Express backend.",
       "tech": ["React", "ExpressJS", "MongoDB", "TailwindCSS"],
       "github": "https://github.com/mchzakaria",
       "demo": "#",
@@ -127,7 +131,7 @@
     },
     {
       "name": "Application Mobile POS",
-      "description": "Mobile Point of Sale system designed and built during an internship at Voie Informatique. Covers product management, sales transactions, inventory tracking, and reporting — all within a smooth Flutter UI.",
+      "description": "Mobile Point of Sale system designed and built during an internship at Voie Informatique. Covers product management, sales transactions, inventory tracking, and reporting - all within a smooth Flutter UI.",
       "tech": ["Flutter", "Dart", "PHP", "MySQL"],
       "github": "https://github.com/mchzakaria",
       "demo": "#",
@@ -140,7 +144,7 @@
     {
       "role": "Full-Stack Developer",
       "company": "TYTHON",
-      "period": "Oct 2025 — Present",
+      "period": "Oct 2025 - Present",
       "location": "Casablanca, Morocco",
       "type": "Full-time",
       "description": "Developing CRUD interfaces connected to APIs with integrated statistical dashboards. Implemented real-time messaging between users and built a REST API using ExpressJS for backend data management.",
@@ -150,46 +154,46 @@
     {
       "role": "Full-Stack Developer Intern",
       "company": "Zine Capital Invest",
-      "period": "Apr 2024 — Jun 2024",
+      "period": "Apr 2024 - Jun 2024",
       "location": "Casablanca, Morocco",
       "type": "Internship",
-      "description": "Designed and built a Digital Management System for the Bureau d'Ordre using the MERN stack — centralising administrative flows, managing mail, tracking regulations with digital signatures, and ensuring visitor traceability.",
+      "description": "Designed and built a Digital Management System for the Bureau d'Ordre using the MERN stack - centralising administrative flows, managing mail, tracking regulations with digital signatures, and ensuring visitor traceability.",
       "stack": ["MongoDB", "Express", "React", "Node.js", "TailwindCSS"],
       "current": false
     },
     {
       "role": "Mobile App Developer Intern",
       "company": "Voie Informatique",
-      "period": "Apr 2023 — Jun 2023",
+      "period": "Apr 2023 - Jun 2023",
       "location": "Casablanca, Morocco",
       "type": "Internship",
-      "description": "Conceived and developed a mobile Point of Sale (POS) system from scratch, covering requirements analysis, UI design, and full implementation using the Flutter framework.",
+      "description": "Conceived and developed a mobile Point of Sale system from scratch, covering requirements analysis, UI design, and full implementation using the Flutter framework.",
       "stack": ["Flutter", "Dart", "PHP", "MySQL"],
       "current": false
     }
   ],
   "education": [
     {
-      "degree": "Licence Professionnelle — Ingénierie des Systèmes Informatiques et Logiciels",
+      "degree": "Licence Professionnelle - Ingenierie des Systemes Informatiques et Logiciels",
       "institution": "EST Essaouira",
       "location": "Essaouira, Morocco",
-      "period": "2023 — 2024",
+      "period": "2023 - 2024",
       "description": "Advanced study of software engineering, system design, and professional IT practices. Focused on building scalable and maintainable software systems.",
       "highlights": ["Software Engineering", "System Architecture", "Web Development", "Project Management"]
     },
     {
-      "degree": "Diplôme Universitaire de Technologie — Génie Informatique",
+      "degree": "Diplome Universitaire de Technologie - Genie Informatique",
       "institution": "EST Essaouira",
       "location": "Essaouira, Morocco",
-      "period": "2021 — 2023",
+      "period": "2021 - 2023",
       "description": "Two-year technology degree covering computer science fundamentals, programming, databases, networks, and applied software development.",
       "highlights": ["Algorithms & Data Structures", "Databases", "Networks", "OOP & Design Patterns"]
     },
     {
-      "degree": "Baccalauréat — Sciences Physiques et Chimiques",
-      "institution": "Lycée Okba Bnou Nafie BirJdid",
+      "degree": "Baccalaureat - Sciences Physiques et Chimiques",
+      "institution": "Lycee Okba Bnou Nafie BirJdid",
       "location": "BirJdid, Morocco",
-      "period": "2020 — 2021",
+      "period": "2020 - 2021",
       "description": "Scientific baccalaureate with specialisation in Physics and Chemistry, building strong analytical and problem-solving foundations.",
       "highlights": ["Physics", "Chemistry", "Mathematics", "Scientific Method"]
     }
@@ -198,5 +202,46 @@
     { "lang": "Arabic", "level": "Native", "pct": 100 },
     { "lang": "French", "level": "Professional", "pct": 85 },
     { "lang": "English", "level": "Professional", "pct": 80 }
-  ]
+  ],
+  "chatbot": {
+    "welcome": "Hi, I can answer quick questions about Zakaria's portfolio.",
+    "questions": [
+      {
+        "id": "profile",
+        "question": "Who is Zakaria?",
+        "answer": "Zakaria MACHMACH is a Full Stack Web Developer based in Casablanca, Morocco, with 2+ years of experience building web, API, real-time, and mobile systems.",
+        "section": "profile"
+      },
+      {
+        "id": "top-skills",
+        "question": "What are Zakaria's main skills?",
+        "answer": "His main stack includes React, TypeScript, Tailwind CSS, Node.js, Express, PostgreSQL, MongoDB, Go, Flutter, Git, and Docker.",
+        "section": "skills"
+      },
+      {
+        "id": "projects",
+        "question": "What projects should I look at first?",
+        "answer": "Start with the MCP Server cloud-hosted AI gateway, the Smart Task Management Microservice, and the Centralized Logging System. They show backend architecture, real-time systems, and production-oriented engineering.",
+        "section": "projects"
+      },
+      {
+        "id": "experience",
+        "question": "What is his current experience?",
+        "answer": "Zakaria is currently a Full-Stack Developer at TYTHON in Casablanca, working on CRUD interfaces, statistical dashboards, real-time messaging, REST APIs, PostgreSQL, Supabase, Redis, JWT, OAuth 2.0, and TailwindCSS.",
+        "section": "experience"
+      },
+      {
+        "id": "availability",
+        "question": "Is Zakaria available for work?",
+        "answer": "Yes. The portfolio marks him as available for hire. You can contact him by email at zakariamachmach03@gmail.com, phone at +212 682 685 984, LinkedIn, or GitHub.",
+        "section": "contact"
+      },
+      {
+        "id": "cv",
+        "question": "Where can I find the CV?",
+        "answer": "The CV is linked from the hero section and is available at /cv.pdf.",
+        "section": "cv"
+      }
+    ]
+  }
 }

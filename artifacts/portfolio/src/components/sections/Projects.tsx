@@ -2,81 +2,13 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Github, ExternalLink, Layers } from "lucide-react";
 import TiltCard from "@/components/ui/TiltCard";
-
-const projects = [
-  {
-    name: "Smart Task Management Microservice",
-    description:
-      "Scalable task management system built as a standalone microservice used by multiple applications. Features hierarchical tasks with automatic updates, secure multi-tenant access with JWT authentication, and modern interfaces including Kanban, sprint planning, and dashboards.",
-    tech: ["TypeScript", "React", "Node.js", "JWT", "PostgreSQL"],
-    github: "https://github.com/mchzakaria",
-    demo: "#",
-    gradient: "from-violet-500/10 to-indigo-500/10",
-    border: "hover:border-violet-400/40",
-    accent: "text-violet-500 dark:text-violet-400",
-  },
-  {
-    name: "Centralized Logging System",
-    description:
-      "Centralized log management system using Go with an agent-to-server architecture for secure log transmission. Implements fault-tolerant delivery with local buffering and retries, and enables real-time log visualization via Server-Sent Events (SSE).",
-    tech: ["Go", "SQLite", "SSE", "REST API"],
-    github: "https://github.com/mchzakaria",
-    demo: "#",
-    gradient: "from-blue-500/10 to-cyan-500/10",
-    border: "hover:border-blue-400/40",
-    accent: "text-blue-500 dark:text-blue-400",
-  },
-  {
-    name: "Système de Gestion du Bureau d'Ordre",
-    description:
-      "Centralised web application automating administrative flows for a financial firm. Manages mail routing, tracks regulatory documents with digital signatures, and ensures full visitor traceability.",
-    tech: ["MongoDB", "Express", "React", "Node.js", "TailwindCSS"],
-    github: "https://github.com/mchzakaria",
-    demo: "#",
-    gradient: "from-emerald-500/10 to-teal-500/10",
-    border: "hover:border-emerald-400/40",
-    accent: "text-emerald-600 dark:text-emerald-400",
-  },
-  {
-    name: "Plateforme de Gestion des Examens",
-    description:
-      "University exam management platform enabling scheduling, student assignment, room allocation, and result tracking — built with a modern React frontend and a RESTful Express backend.",
-    tech: ["React", "ExpressJS", "MongoDB", "TailwindCSS"],
-    github: "https://github.com/mchzakaria",
-    demo: "#",
-    gradient: "from-orange-500/10 to-amber-500/10",
-    border: "hover:border-orange-400/40",
-    accent: "text-orange-500 dark:text-orange-400",
-  },
-  {
-    name: "Application Mobile POS",
-    description:
-      "Mobile Point of Sale system designed and built during an internship at Voie Informatique. Covers product management, sales transactions, inventory tracking, and reporting — all within a smooth Flutter UI.",
-    tech: ["Flutter", "Dart", "PHP", "MySQL"],
-    github: "https://github.com/mchzakaria",
-    demo: "#",
-    gradient: "from-pink-500/10 to-rose-500/10",
-    border: "hover:border-pink-400/40",
-    accent: "text-pink-500 dark:text-pink-400",
-  },
-];
-
-import { useQuery } from "@tanstack/react-query";
+import { fallbackPortfolioData, usePortfolioData, type Project } from "@/lib/portfolioData";
 
 export default function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const { data } = useQuery({
-    queryKey: ["/api/data"],
-    queryFn: async () => {
-      const res = await fetch("/api/data");
-      if (!res.ok) throw new Error("Failed to fetch data");
-      return res.json();
-    }
-  });
-
-  const displayProjects = data?.projects || projects;
+  const { data = fallbackPortfolioData } = usePortfolioData();
+  const displayProjects = data.projects;
 
   return (
     <section id="projects" className="py-16 sm:py-24 px-4 sm:px-6 bg-card/30" data-testid="section-projects" ref={ref}>
@@ -99,12 +31,12 @@ export default function Projects() {
           <span className="relative z-10 text-primary font-mono text-sm tracking-widest uppercase">04. Projects</span>
           <h2 className="relative z-10 text-3xl md:text-4xl font-bold text-foreground">Selected Work</h2>
           <p className="relative z-10 text-muted-foreground max-w-xl mt-2">
-            Real projects — from microservices and real-time systems to mobile apps and admin platforms.
+            Real projects - from microservices and real-time systems to mobile apps and admin platforms.
           </p>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 gap-5 sm:gap-6" style={{ perspective: "1200px" }}>
-          {displayProjects.map((project: any, i: number) => (
+          {displayProjects.map((project: Project, i: number) => (
             <motion.div
               key={project.name}
               initial={{ opacity: 0, y: 30 }}
@@ -126,6 +58,7 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-foreground transition-colors"
                       data-testid={`project-github-${i}`}
+                      aria-label={`Open ${project.name} GitHub`}
                     >
                       <Github className="w-4 h-4" />
                     </a>
@@ -136,6 +69,7 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         className="text-muted-foreground hover:text-foreground transition-colors"
                         data-testid={`project-demo-${i}`}
+                        aria-label={`Open ${project.name} demo`}
                       >
                         <ExternalLink className="w-4 h-4" />
                       </a>
@@ -147,13 +81,13 @@ export default function Projects() {
                 <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2">
-                  {project.tech?.map((t: string) => (
+                  {project.tech.map((tech) => (
                     <span
-                      key={t}
+                      key={tech}
                       className="px-2.5 py-1 text-xs font-mono bg-background/70 border border-border/60 text-muted-foreground rounded-md hover:text-foreground transition-colors"
-                      data-testid={`project-tech-${t.toLowerCase().replace(/\s+/g, "-")}`}
+                      data-testid={`project-tech-${tech.toLowerCase().replace(/\s+/g, "-")}`}
                     >
-                      {t}
+                      {tech}
                     </span>
                   ))}
                 </div>

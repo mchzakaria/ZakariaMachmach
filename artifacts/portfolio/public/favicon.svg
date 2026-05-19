@@ -1,3 +1,15 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="180" height="180" rx="36" fill="#FF3C00"/>
+  <rect width="180" height="180" rx="42" fill="#09090B"/>
+  <rect x="10" y="10" width="160" height="160" rx="34" fill="url(#g)" stroke="#8B5CF6" stroke-width="4"/>
+  <path d="M55 68L32 90L55 112" stroke="#EDE9FE" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M125 68L148 90L125 112" stroke="#EDE9FE" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M105 42L77 138" stroke="#22D3EE" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="90" cy="90" r="66" stroke="#A78BFA" stroke-opacity=".22" stroke-width="10"/>
+  <defs>
+    <linearGradient id="g" x1="18" y1="20" x2="162" y2="158" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18181B"/>
+      <stop offset=".48" stop-color="#312E81"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
 </svg>

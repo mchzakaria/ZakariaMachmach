@@ -1,9 +1,36 @@
-import { promises as fs } from "node:fs";
+import { promises as fs, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_FILE = path.resolve(__dirname, "../data.json");
+
+// Robust path resolution for data.json
+function resolveDataFile() {
+  const candidates = new Set<string>();
+  const searchRoots = [process.cwd(), __dirname];
+
+  for (const root of searchRoots) {
+    let current = path.resolve(root);
+
+    for (let i = 0; i < 8; i++) {
+      candidates.add(path.resolve(current, "lib/db/data.json"));
+      const parent = path.dirname(current);
+      if (parent === current) break;
+      current = parent;
+    }
+  }
+
+  candidates.add(path.resolve(__dirname, "../data.json")); // Source package fallback
+
+  for (const p of candidates) {
+    if (existsSync(p)) {
+      return p;
+    }
+  }
+  return Array.from(candidates)[0]; // Fallback to default
+}
+
+const DATA_FILE = resolveDataFile();
 
 // Ensure data file exists
 async function init() {

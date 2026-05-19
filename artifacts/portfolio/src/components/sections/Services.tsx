@@ -66,7 +66,7 @@ export default function Services() {
           <span className="relative z-10 text-primary font-mono text-sm tracking-widest uppercase">03. Services</span>
           <h2 className="relative z-10 text-3xl md:text-4xl font-bold text-foreground">What I Offer</h2>
           <p className="relative z-10 text-muted-foreground max-w-xl mt-2">
-            From concept to deployment — I cover the full development lifecycle.
+            From concept to deployment - I cover the full development lifecycle.
           </p>
         </motion.div>
 

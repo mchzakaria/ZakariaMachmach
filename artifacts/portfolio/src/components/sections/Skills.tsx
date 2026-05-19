@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, type ElementType } from "react";
 import { motion, useInView } from "framer-motion";
 import {
   SiReact, SiTypescript, SiTailwindcss, SiJavascript,
@@ -7,120 +7,53 @@ import {
   SiGit, SiDocker, SiDart, SiFlutter, SiGo,
 } from "react-icons/si";
 import { Globe, Code2 } from "lucide-react";
+import { fallbackPortfolioData, usePortfolioData, type SkillCategory } from "@/lib/portfolioData";
 
-const categories = [
-  {
-    title: "Frontend",
-    accent: "text-violet-600 dark:text-violet-400",
-    border: "border-violet-500/20",
-    glow: "rgba(139,92,246,0.12)",
-    bg: "from-violet-500/5 to-transparent",
-    skills: [
-      { name: "React", icon: SiReact, color: "#61DAFB", level: 92 },
-      { name: "TypeScript", icon: SiTypescript, color: "#3178C6", level: 88 },
-      { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", level: 90 },
-      { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E", level: 90 },
-      { name: "HTML / CSS", icon: Globe, color: "#E34F26", level: 95 },
-    ],
-  },
-  {
-    title: "Backend",
-    accent: "text-indigo-600 dark:text-indigo-400",
-    border: "border-indigo-500/20",
-    glow: "rgba(99,102,241,0.12)",
-    bg: "from-indigo-500/5 to-transparent",
-    skills: [
-      { name: "Node.js", icon: SiNodedotjs, color: "#339933", level: 88 },
-      { name: "Express", icon: SiExpress, color: "#888888", level: 87 },
-      { name: "PHP", icon: SiPhp, color: "#777BB4", level: 80 },
-      { name: "Spring Boot", icon: SiSpring, color: "#6DB33F", level: 72 },
-      { name: "Symfony", icon: SiSymfony, color: "#888888", level: 70 },
-    ],
-  },
-  {
-    title: "Databases & Cache",
-    accent: "text-blue-600 dark:text-blue-400",
-    border: "border-blue-500/20",
-    glow: "rgba(59,130,246,0.12)",
-    bg: "from-blue-500/5 to-transparent",
-    skills: [
-      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1", level: 85 },
-      { name: "MongoDB", icon: SiMongodb, color: "#47A248", level: 85 },
-      { name: "MySQL", icon: SiMysql, color: "#4479A1", level: 83 },
-      { name: "Redis", icon: SiRedis, color: "#DC382D", level: 75 },
-      { name: "Supabase", icon: SiSupabase, color: "#3ECF8E", level: 72 },
-    ],
-  },
-  {
-    title: "Languages & Tools",
-    accent: "text-purple-600 dark:text-purple-400",
-    border: "border-purple-500/20",
-    glow: "rgba(168,85,247,0.12)",
-    bg: "from-purple-500/5 to-transparent",
-    skills: [
-      { name: "Go", icon: SiGo, color: "#00ADD8", level: 75 },
-      { name: "Dart / Flutter", icon: SiFlutter, color: "#02569B", level: 78 },
-      { name: "Java", icon: Code2, color: "#f89820", level: 72 },
-      { name: "Git", icon: SiGit, color: "#F05032", level: 92 },
-      { name: "Docker", icon: SiDocker, color: "#2496ED", level: 78 },
-    ],
-  },
-];
-
-function ContributionGrid({ level }: { level: number }) {
-  const weeks = 15;
-  const days = 7;
-  const cells = Array.from({ length: weeks * days }, (_, i) => {
-    const base = (i / (weeks * days)) * level;
-    const rand = Math.random() * 30;
-    return Math.max(0, Math.min(100, base + rand));
-  });
-
-  return (
-    <div className="flex gap-0.5 mt-3 flex-wrap">
-      {Array.from({ length: weeks }, (_, w) => (
-        <div key={w} className="flex flex-col gap-0.5">
-          {Array.from({ length: days }, (_, d) => {
-            const val = cells[w * days + d];
-            const opacity = val < 10 ? 0.07 : val < 30 ? 0.25 : val < 60 ? 0.5 : val < 80 ? 0.75 : 1;
-            return (
-              <div
-                key={d}
-                className="w-2.5 h-2.5 rounded-sm bg-primary"
-                style={{ opacity }}
-              />
-            );
-          })}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-import { useQuery } from "@tanstack/react-query";
-
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, ElementType> = {
   SiReact, SiTypescript, SiTailwindcss, SiJavascript,
   SiNodedotjs, SiExpress, SiPhp, SiSpring, SiSymfony,
   SiPostgresql, SiMongodb, SiMysql, SiRedis, SiSupabase,
   SiGit, SiDocker, SiDart, SiFlutter, SiGo,
-  Globe, Code2
+  Globe, Code2,
 };
+
+function activityValue(level: number, index: number) {
+  const wave = Math.sin((index + 1) * (level + 17)) * 10000;
+  const noise = wave - Math.floor(wave);
+  const trend = (index / 125) * level * 0.35;
+  return Math.max(0, Math.min(100, level * 0.35 + trend + noise * 45));
+}
+
+function ContributionGrid({ level }: { level: number }) {
+  const weeks = 26;
+  const days = 7;
+  const cells = Array.from({ length: weeks * days }, (_, i) => activityValue(level, i));
+
+  return (
+    <div
+      className="mt-3 grid w-full grid-flow-col grid-rows-7 justify-start gap-[3px]"
+      style={{ gridTemplateColumns: `repeat(${weeks}, minmax(0, 10px))` }}
+      aria-label={`Activity intensity ${Math.round(level)} percent`}
+    >
+      {cells.map((val, i) => {
+        const opacity = val < 10 ? 0.08 : val < 30 ? 0.25 : val < 60 ? 0.5 : val < 80 ? 0.75 : 1;
+        return (
+          <div
+            key={i}
+            className="h-2 w-2 rounded-[2px] bg-primary sm:h-2.5 sm:w-2.5"
+            style={{ opacity }}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 export default function Skills() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["/api/data"],
-    queryFn: async () => {
-      const res = await fetch("/api/data");
-      if (!res.ok) throw new Error("Failed to fetch skills data");
-      return res.json();
-    }
-  });
-
-  const displayCategories = data?.categories || categories;
+  const { data = fallbackPortfolioData } = usePortfolioData();
+  const displayCategories = data.categories;
 
   return (
     <section id="skills" className="py-16 sm:py-24 px-4 sm:px-6 bg-muted/30" data-testid="section-skills" ref={ref}>
@@ -143,67 +76,71 @@ export default function Skills() {
           <span className="relative z-10 text-primary font-mono text-sm tracking-widest uppercase">02. Skills</span>
           <h2 className="relative z-10 text-3xl md:text-4xl font-bold">Tech Stack</h2>
           <p className="relative z-10 text-muted-foreground max-w-xl mt-2">
-            Technologies I work with — visualized as contribution intensity.
+            Technologies I work with - visualized as contribution intensity.
           </p>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
-          {displayCategories.map((cat: any, ci: number) => (
-            <motion.div
-              key={cat.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: ci * 0.12 }}
-              className={`rounded-2xl border ${cat.border} bg-gradient-to-b ${cat.bg} bg-card p-5 sm:p-6 hover:shadow-lg transition-all duration-300 group`}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 30px ${cat.glow}`; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = ``; }}
-              data-testid={`skill-category-${cat.title.toLowerCase().replace(/\s+/g, "-")}`}
-            >
-              <h3 className={`font-mono text-xs font-bold uppercase tracking-widest ${cat.accent} mb-4`}>
-                {cat.title}
-              </h3>
-              <div className="space-y-3">
-                {cat.skills.map((skill: any, si: number) => {
-                  const Icon = typeof skill.icon === 'string' ? iconMap[skill.icon] : skill.icon;
-                  return (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={inView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ duration: 0.4, delay: ci * 0.1 + si * 0.07 + 0.2 }}
-                      className="flex items-center gap-3 group/skill"
-                      data-testid={`skill-${skill.name.toLowerCase().replace(/[\s./]+/g, "-")}`}
-                    >
-                      <div className="w-7 h-7 rounded-md bg-background border border-border/60 flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-3.5 h-3.5" style={{ color: skill.color }} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-mono text-muted-foreground group-hover/skill:text-foreground transition-colors">
-                            {skill.name}
-                          </span>
-                          <span className="text-xs font-mono text-primary/70">{skill.level}%</span>
+          {displayCategories.map((cat: SkillCategory, ci: number) => {
+            const averageLevel = cat.skills.reduce((sum, skill) => sum + skill.level, 0) / cat.skills.length;
+
+            return (
+              <motion.div
+                key={cat.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: ci * 0.12 }}
+                className={`rounded-2xl border ${cat.border} bg-gradient-to-b ${cat.bg} bg-card p-5 sm:p-6 hover:shadow-lg transition-all duration-300 group`}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 0 30px ${cat.glow}`; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = ""; }}
+                data-testid={`skill-category-${cat.title.toLowerCase().replace(/\s+/g, "-")}`}
+              >
+                <h3 className={`font-mono text-xs font-bold uppercase tracking-widest ${cat.accent} mb-4`}>
+                  {cat.title}
+                </h3>
+                <div className="space-y-3">
+                  {cat.skills.map((skill, si) => {
+                    const Icon = iconMap[skill.icon] || Code2;
+                    return (
+                      <motion.div
+                        key={skill.name}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={inView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.4, delay: ci * 0.1 + si * 0.07 + 0.2 }}
+                        className="flex items-center gap-3 group/skill"
+                        data-testid={`skill-${skill.name.toLowerCase().replace(/[\s./]+/g, "-")}`}
+                      >
+                        <div className="w-7 h-7 rounded-md bg-background border border-border/60 flex items-center justify-center flex-shrink-0">
+                          <Icon className="w-3.5 h-3.5" style={{ color: skill.color }} />
                         </div>
-                        <div className="h-1 bg-muted rounded-full overflow-hidden">
-                          <motion.div
-                            className="h-full rounded-full bg-primary"
-                            initial={{ width: 0 }}
-                            animate={inView ? { width: `${skill.level}%` } : {}}
-                            transition={{ duration: 1, delay: ci * 0.1 + si * 0.1 + 0.4, ease: "easeOut" }}
-                            style={{ boxShadow: "0 0 8px rgba(139,92,246,0.4)" }}
-                          />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-mono text-muted-foreground group-hover/skill:text-foreground transition-colors">
+                              {skill.name}
+                            </span>
+                            <span className="text-xs font-mono text-primary/70">{skill.level}%</span>
+                          </div>
+                          <div className="h-1 bg-muted rounded-full overflow-hidden">
+                            <motion.div
+                              className="h-full rounded-full bg-primary"
+                              initial={{ width: 0 }}
+                              animate={inView ? { width: `${skill.level}%` } : {}}
+                              transition={{ duration: 1, delay: ci * 0.1 + si * 0.1 + 0.4, ease: "easeOut" }}
+                              style={{ boxShadow: "0 0 8px rgba(139,92,246,0.4)" }}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-              <div>
-                <p className="text-xs font-mono text-muted-foreground mt-4 mb-1">Activity graph</p>
-                <ContributionGrid level={displayCategories[ci].skills.reduce((s: number, sk: any) => s + sk.level, 0) / cat.skills.length} />
-              </div>
-            </motion.div>
-          ))}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+                <div>
+                  <p className="text-xs font-mono text-muted-foreground mt-4 mb-1">Activity graph</p>
+                  <ContributionGrid level={averageLevel} />
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

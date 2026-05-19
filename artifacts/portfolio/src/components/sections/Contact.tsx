@@ -7,11 +7,38 @@ export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!form.name || !form.email || !form.message) return;
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.error || "Failed to send message");
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error("Submission error:", err);
+      setError(err.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -118,9 +145,10 @@ export default function Contact() {
                     id="name"
                     type="text"
                     required
+                    disabled={isSubmitting}
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 transition-colors"
+                    className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 transition-colors disabled:opacity-50"
                     placeholder="Your name"
                     data-testid="input-name"
                   />
@@ -133,9 +161,10 @@ export default function Contact() {
                     id="email"
                     type="email"
                     required
+                    disabled={isSubmitting}
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 transition-colors"
+                    className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 transition-colors disabled:opacity-50"
                     placeholder="you@example.com"
                     data-testid="input-email"
                   />
@@ -148,22 +177,40 @@ export default function Contact() {
                     id="message"
                     required
                     rows={5}
+                    disabled={isSubmitting}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 transition-colors resize-none"
+                    className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 transition-colors resize-none disabled:opacity-50"
                     placeholder="Tell me about your project..."
                     data-testid="input-message"
                   />
                 </div>
+                {error && (
+                  <div className="text-rose-500 text-xs font-medium bg-rose-500/10 border border-rose-500/20 px-4 py-2.5 rounded-lg">
+                    {error}
+                  </div>
+                )}
                 <MagneticButton
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:opacity-90 transition-all disabled:opacity-50 disabled:pointer-events-none"
                   data-testid="button-submit"
-                  strength={0.15}
+                  strength={isSubmitting ? 0 : 0.15}
                   radius={150}
-                  onClick={() => handleSubmit({ preventDefault: () => {} } as React.FormEvent)}
+                  disabled={isSubmitting}
+                  onClick={() => {
+                    handleSubmit({ preventDefault: () => {} } as React.FormEvent);
+                  }}
                 >
-                  <Send className="w-4 h-4" />
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <span className="h-4 w-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                      Sending Message...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Send Message
+                    </>
+                  )}
                 </MagneticButton>
               </form>
             )}

@@ -1,59 +1,19 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { GraduationCap, Award } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-
-const education = [
-  {
-    degree: "Licence Professionnelle — Ingénierie des Systèmes Informatiques et Logiciels",
-    institution: "EST Essaouira",
-    location: "Essaouira, Morocco",
-    period: "2023 — 2024",
-    description:
-      "Advanced study of software engineering, system design, and professional IT practices. Focused on building scalable and maintainable software systems.",
-    highlights: ["Software Engineering", "System Architecture", "Web Development", "Project Management"],
-  },
-  {
-    degree: "Diplôme Universitaire de Technologie — Génie Informatique",
-    institution: "EST Essaouira",
-    location: "Essaouira, Morocco",
-    period: "2021 — 2023",
-    description:
-      "Two-year technology degree covering computer science fundamentals, programming, databases, networks, and applied software development.",
-    highlights: ["Algorithms & Data Structures", "Databases", "Networks", "OOP & Design Patterns"],
-  },
-  {
-    degree: "Baccalauréat — Sciences Physiques et Chimiques",
-    institution: "Lycée Okba Bnou Nafie BirJdid",
-    location: "BirJdid, Morocco",
-    period: "2020 — 2021",
-    description:
-      "Scientific baccalaureate with specialisation in Physics and Chemistry, building strong analytical and problem-solving foundations.",
-    highlights: ["Physics", "Chemistry", "Mathematics", "Scientific Method"],
-  },
-];
-
-const DEFAULT_LANGUAGES = [
-  { lang: "Arabic", level: "Native", pct: 100 },
-  { lang: "French", level: "Professional", pct: 85 },
-  { lang: "English", level: "Professional", pct: 80 },
-];
+import {
+  fallbackPortfolioData,
+  usePortfolioData,
+  type Education as EducationItem,
+  type Language,
+} from "@/lib/portfolioData";
 
 export default function Education() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const { data } = useQuery({
-    queryKey: ["/api/data"],
-    queryFn: async () => {
-      const res = await fetch("/api/data");
-      if (!res.ok) throw new Error("Failed to fetch data");
-      return res.json();
-    }
-  });
-
-  const displayEducation = data?.education || education;
-  const displayLanguages = data?.languages || DEFAULT_LANGUAGES;
+  const { data = fallbackPortfolioData } = usePortfolioData();
+  const displayEducation = data.education;
+  const displayLanguages = data.languages;
 
   return (
     <section id="education" className="py-16 sm:py-24 px-4 sm:px-6 bg-card/30" data-testid="section-education" ref={ref}>
@@ -80,7 +40,7 @@ export default function Education() {
         <div className="relative">
           <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-border/60" />
           <div className="space-y-6">
-            {displayEducation.map((edu: any, i: number) => (
+            {displayEducation.map((edu: EducationItem, i: number) => (
               <motion.div
                 key={edu.degree}
                 initial={{ opacity: 0, x: -20 }}
@@ -111,13 +71,13 @@ export default function Education() {
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">{edu.description}</p>
 
                   <div className="flex flex-wrap gap-2">
-                    {edu.highlights?.map((h: string) => (
+                    {edu.highlights.map((highlight) => (
                       <span
-                        key={h}
+                        key={highlight}
                         className="px-2.5 py-1 text-xs font-mono bg-primary/10 border border-primary/20 text-primary rounded-md"
-                        data-testid={`edu-highlight-${h.toLowerCase().replace(/\s+/g, "-")}`}
+                        data-testid={`edu-highlight-${highlight.toLowerCase().replace(/\s+/g, "-")}`}
                       >
-                        {h}
+                        {highlight}
                       </span>
                     ))}
                   </div>
@@ -127,7 +87,6 @@ export default function Education() {
           </div>
         </div>
 
-        {/* Languages spoken */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -142,15 +101,15 @@ export default function Education() {
               <h3 className="font-bold text-foreground">Languages</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {displayLanguages.map((l: any) => (
-                <div key={l.lang} className="p-3 rounded-lg bg-background border border-border/60">
-                  <p className="text-sm font-semibold text-foreground">{l.lang}</p>
-                  <p className="text-xs text-muted-foreground mb-2">{l.level}</p>
+              {displayLanguages.map((language: Language) => (
+                <div key={language.lang} className="p-3 rounded-lg bg-background border border-border/60">
+                  <p className="text-sm font-semibold text-foreground">{language.lang}</p>
+                  <p className="text-xs text-muted-foreground mb-2">{language.level}</p>
                   <div className="h-1 bg-muted rounded-full overflow-hidden">
                     <motion.div
                       className="h-full rounded-full bg-primary"
                       initial={{ width: 0 }}
-                      animate={inView ? { width: `${l.pct}%` } : {}}
+                      animate={inView ? { width: `${language.pct}%` } : {}}
                       transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
                     />
                   </div>

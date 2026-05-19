@@ -9,13 +9,13 @@ const lines = [
   "\\  `  |l     ||  .  Y     T|  .  Y     T\\    |",
   " \\____|\\__,__||__|\\_l_____ll__|\\_l_____j \\___j",
   "",
-  "  You found the Easter Egg! 🎮",
+  "  You found the Easter Egg!",
   "",
   "  const developer = {",
   "    name: 'Zakaria MACHMACH',",
   "    level: 'Senior',",
   "    superPower: 'coffee => code',",
-  "    secretCode: '↑↑↓↓←→←→BA ✓',",
+  "    secretCode: 'up up down down left right left right B A',",
   "    message: 'Hire me. I know the Konami Code.'",
   "  }",
 ];
@@ -42,13 +42,13 @@ export default function KonamiEasterEgg({ onClose }: { onClose: () => void }) {
             <div className="w-3 h-3 rounded-full bg-red-500/80" />
             <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
             <div className="w-3 h-3 rounded-full bg-green-500/80" />
-            <span className="ml-2 text-xs font-mono text-primary">easter_egg.ts — SECRET</span>
+            <span className="ml-2 text-xs font-mono text-primary">easter_egg.ts - SECRET</span>
             <button
               onClick={onClose}
               className="ml-auto text-xs font-mono text-muted-foreground hover:text-foreground transition-colors px-2"
               data-testid="easter-egg-close"
             >
-              ✕ close
+              x close
             </button>
           </div>
           <div className="p-6 font-mono text-xs md:text-sm overflow-x-auto">

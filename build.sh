@@ -11,13 +11,17 @@ pnpm --filter @workspace/portfolio build
 mkdir -p .vercel/output/static
 cp -r artifacts/portfolio/dist/public/. .vercel/output/static/
 
-# Write routing: /api/data → /data.json, fallback to SPA index.html
+# Build the api-server as a Vercel Serverless Function
+node artifacts/api-server/build-vercel.mjs
+
+# Write routing: /api/data → /data.json, /api/(.*) → /api serverless function, fallback to SPA index.html
 node -e "
 const fs = require('fs');
 fs.writeFileSync('.vercel/output/config.json', JSON.stringify({
   version: 3,
   routes: [
     { src: '/api/data', dest: '/data.json' },
+    { src: '/api/(.*)', dest: '/api' },
     { handle: 'filesystem' },
     { src: '/(.*)', dest: '/index.html' }
   ]

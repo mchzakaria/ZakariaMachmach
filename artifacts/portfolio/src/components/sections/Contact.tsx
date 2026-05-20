@@ -28,8 +28,14 @@ export default function Contact() {
       });
 
       if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error || "Failed to send message");
+        let errorMessage = "Failed to send message";
+        try {
+          const errData = await response.json();
+          errorMessage = errData.error || errorMessage;
+        } catch {
+          // Response body was not JSON (e.g. HTML error page)
+        }
+        throw new Error(errorMessage);
       }
 
       setSubmitted(true);
